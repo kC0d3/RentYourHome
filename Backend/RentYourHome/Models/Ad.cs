@@ -1,6 +1,6 @@
-using System.Net.Mime;
-
 namespace RentYourHome.Models;
+
+
 
 public class Ad
 {
@@ -11,8 +11,9 @@ public class Ad
     public int Price { get; init; }
     public string Description { get; init; }
     public ICollection<Image> Images { get; init; }
-    public User PostedBy { get; init; }
+    
+    public ICollection<UserAdApply> AppliedAds { get; init; }
 
-    public int PostedByUserId { get; init; }
-    public ICollection<User> AplliedUsers { get; init; }
+    public int UserId { get; init; }
+    public User User { get; init; }
 }
