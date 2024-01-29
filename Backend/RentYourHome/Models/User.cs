@@ -9,6 +9,6 @@ public class User
     public string Email { get; init; }
     public Address Address { get; init; }
     
-    public ICollection<Ad> PostedAd { get; init; }
-    public ICollection<Ad> AppliedAd { get; init; }
+    public ICollection<Ad> PublishedAds { get; init; }
+    public ICollection<UserAdApply> AppliedAds { get; init; }
 }
