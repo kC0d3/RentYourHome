@@ -21,6 +21,7 @@ function App() {
     <>
       <Navbar />
       <HomePage />
+      <br></br>
       <div>{data}</div>
     </>
   );
