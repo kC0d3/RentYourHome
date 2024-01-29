@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './Navbar/Navbar.jsx';
+import Navbar from "./Navbar/Navbar.jsx";
+import HomePage from "./HomePage/HomePage.jsx";
 
 function App() {
 
-  const [data, setData] = useState("null");
+  const [data, setData] = useState("");
+
   useEffect(() => {
     fetch('/api/users')
       .then(response => response.text())
@@ -18,6 +20,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <HomePage />
       <div>{data}</div>
     </>
   );
