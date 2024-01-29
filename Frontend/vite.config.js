@@ -1,5 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import dotenv from 'dotenv'
+import path from 'path'
+
+dotenv.config({
+  path: path.join('..', '.env')
+});
+
+const { SERVERHOST, SERVERPORT } = process.env;
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -7,10 +15,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5256',
+        target: `http://${SERVERHOST}:${SERVERPORT}`,
         changeOrigin: true,
         secure: false,
       }
     }
   }
-})
+});
