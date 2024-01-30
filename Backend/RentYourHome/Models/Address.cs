@@ -6,6 +6,4 @@ public class Address
     public string City { get; init; }
     public string Street { get; init; }
     public int HouseNumber { get; init; }
-    public int Floor { get; init; }
-    public int Door { get; init; }
 }
