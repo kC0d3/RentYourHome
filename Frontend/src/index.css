@@ -1,3 +1,4 @@
+/* Global styles */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -24,8 +25,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  /* place-items: center; */
+  display: block;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -65,4 +65,94 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+/* End of global styles */
+
+/* Main container of the homepage */
+.homepage-container {
+  display: block;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #333;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.navbar a:hover {
+  background-color: #646cff;
+}
+
+/* Search bar */
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  color: white;
+  cursor: pointer;
+}
+
+
+/* Filter Bar styles */
+.filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  color: white;
+  cursor: pointer;
+}
+
+/* Content area */
+.content-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns of equal size */
+  gap: 1rem; /* Spacing between cards */
+}
+
+.card {
+  display: flex;
+  flex-direction: column; /* Stack image on top of info */
+  align-items: center; /* Center items horizontally */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.card img {
+  max-width: 100%; /* Make sure the image is contained within the card */
+  border-radius: 4px;
+  margin-bottom: 0.5rem; /* Spacing between the image and the info */
+}
+
+.card .info {
+  text-align: center; /* Center the text in the info area */
 }
