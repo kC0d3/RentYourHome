@@ -1,6 +1,6 @@
 import React from "react";
-import SearchBar from "../SearchBar/SearchBar.jsx";
-import FiltersBar from "../FiltersBar/FiltersBar.jsx";
+import SearchBar from "./SearchBar.jsx";
+import FiltersBar from "./FiltersBar.jsx";
 
 function HomePage() {
     const handleSearch = (searchTerm) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from "./Navbar/Navbar.jsx";
-import HomePage from "./HomePage/HomePage.jsx";
+import Navbar from "./Components/Navbar.jsx";
+import HomePage from "./Components/HomePage.jsx";
 
 function App() {
 
