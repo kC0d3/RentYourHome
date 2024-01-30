@@ -119,7 +119,7 @@ button:focus-visible {
 /* Filter Bar styles */
 .filters {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Adjust number of columns as needed */
+  grid-template-columns: t(auto-fit, minmax(200px, 1fr));
   gap: 0.5rem;
   margin: 0.5rem 0;
 }

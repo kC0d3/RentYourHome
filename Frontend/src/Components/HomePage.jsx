@@ -37,7 +37,6 @@ function HomePage() {
         <div className="homepage-container">
             <div className="content-area">
                 <div className="search-filter-area">
-                    {/* <SearchBar onSearch={handleSearch} /> */}
                     <FiltersBar onFilter={handleFilterChange} />
                     <br></br>
                     <div>{data}</div>
