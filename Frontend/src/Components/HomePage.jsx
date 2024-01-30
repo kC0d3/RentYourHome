@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
-import SearchBar from "./SearchBar.jsx";
 import FiltersBar from "./FiltersBar.jsx";
 
 function HomePage() {
     const [data, setData] = useState("");
-
+    const [filters, setFilters] = useState({
+        location: '',
+        minPrice: '',
+        maxPrice: '',
+        minSize: '',
+        maxSize: '',
+        minRooms: '',
+        maxRooms: '',
+    });
+    
     useEffect(() => {
-        fetch('/api/users')
+        const queryParams = new URLSearchParams(filters).toString();
+
+        fetch(`/api/users?${queryParams}`)
             .then(response => response.text())
             .then(d => {
                 setData(d);
@@ -14,24 +24,22 @@ function HomePage() {
             }
             )
             .catch(error => console.log(error))
-    }, []);
+    }, [filters]);
 
-    const handleSearch = (searchTerm) => {
-        console.log('Search for:', searchTerm)
-        // TODO: Search logic
-    }
-
-    const handleFilterSelect = (filter) => {
-        console.log('Filter selected:', filter)
-        // TODO: FIlter logic
+    const handleFilterChange = (filterType, value) => {
+        setFilters(prevFilters => ({
+            ...prevFilters, [filterType]: value
+        }));
+        console.log('Filter selected:', filterType, value)
     }
 
     return (
         <div className="homepage-container">
             <div className="content-area">
                 <div className="search-filter-area">
-                    <SearchBar onSearch={handleSearch} />
-                    <FiltersBar onFilterSelect={handleFilterSelect} />
+                    {/* <SearchBar onSearch={handleSearch} /> */}
+                    <FiltersBar onFilter={handleFilterChange} />
+                    <br></br>
                     <div>{data}</div>
                 </div>
             </div>
