@@ -90,9 +90,6 @@ button:focus-visible {
   padding: 0.5rem 1rem;
 }
 
-.navbar a:hover {
-  background-color: #646cff;
-}
 
 /* Filter Bar styles */
 .filters {
