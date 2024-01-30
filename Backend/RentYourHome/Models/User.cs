@@ -10,5 +10,5 @@ public class User
     public Address Address { get; init; }
     
     public ICollection<Ad> PublishedAds { get; init; }
-    public ICollection<UserAdApply> AppliedAds { get; init; }
+    public ICollection<UserAppliedAd> AppliedAds { get; init; }
 }
