@@ -1,6 +1,6 @@
 namespace RentYourHome.Models;
 
-public class UserAdApply
+public class UserAppliedAd
 {
     public Ad Ad { get; init; }
     public int AdId { get; init; }
