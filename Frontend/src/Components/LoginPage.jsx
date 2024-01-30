@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navbar from "./Navbar.jsx";
 import RegistrationForm from "./RegistrationForm";
 
 function LoginPage() {
@@ -16,6 +17,8 @@ function LoginPage() {
     };
 
     return (
+        <>
+        <Navbar />
         <div className="login-page">
             {isLoggedIn ? (<p>Welcome, {username}</p>) : ( <p>Please log in to access the full website.</p>)}
             <div className="login-form">
@@ -27,6 +30,7 @@ function LoginPage() {
 
             {showRegistration && <RegistrationForm setShowRegistration={setShowRegistration} />}
         </div>
+        </>
     )
 }
 
