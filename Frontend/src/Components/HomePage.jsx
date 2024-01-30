@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "./Navbar.jsx";
 import FiltersBar from "./FiltersBar.jsx";
 
 function HomePage() {
@@ -12,7 +13,7 @@ function HomePage() {
         minRooms: '',
         maxRooms: '',
     });
-    
+
     useEffect(() => {
         const queryParams = new URLSearchParams(filters).toString();
 
@@ -34,15 +35,18 @@ function HomePage() {
     }
 
     return (
-        <div className="homepage-container">
-            <div className="content-area">
-                <div className="search-filter-area">
-                    <FiltersBar onFilter={handleFilterChange} />
-                    <br></br>
-                    <div>{data}</div>
+        <>
+            <Navbar />
+            <div className="homepage-container">
+                <div className="content-area">
+                    <div className="filter-area">
+                        <FiltersBar onFilter={handleFilterChange} />
+                        <br></br>
+                        <div className="data-area">{data}</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
