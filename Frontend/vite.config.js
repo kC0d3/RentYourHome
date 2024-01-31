@@ -1,24 +1,25 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import dotenv from 'dotenv'
-import path from 'path'
+import react from '@vitejs/plugin-react';
+import { defineConfig, loadEnv } from 'vite';
 
-dotenv.config({
-  path: path.join('..', '.env')
-});
-
-const { SERVERHOST, SERVERPORT } = process.env;
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: `http://${SERVERHOST}:${SERVERPORT}`,
-        changeOrigin: true,
-        secure: false,
-      }
+export default defineConfig(({ mode }) => {
+  // Load env file based on mode in the current working directory.
+  // Set the third parameter to '' to load all env regardless of the VITE_ prefix.
+  // eslint-disable-next-line no-undef
+  const env = loadEnv(mode, process.cwd(), '')  //ez lehet nem kell, de ha amiatt romlik el hogy kitörlöd, kezed letöröm!!!!
+  //const backendPort = env.VITE_BACKEND_PORT  env.VITE_BACKEND_DOCKER_PORT;
+  
+  return {
+    plugins: [react()],
+    server: {
+      watch: {
+        usePolling: true,
+      },
+      host: true, 
+      port:5173,
+      strictPort: true,
+      proxy: {
+        '/api': env.BACKEND_URL || `http://localhost:5256`,
     }
   }
-});
+  }
+})
