@@ -1,6 +1,5 @@
-import React from "react";
 
-function FiltersBar({ onFilter }) {
+const FiltersBar=( onFilter )=> {
     return (
         <div className="filters">
             <div className="filter-input-group">
