@@ -8,7 +8,8 @@ public class User
     public string LastName { get; init; }
     public string Email { get; init; }
     public Address Address { get; init; }
-    
+    public bool Accepted { get; set; }
+
     public ICollection<Ad> PublishedAds { get; init; }
-    public ICollection<UserAppliedAd> AppliedAds { get; init; }
+    public ICollection<UserAdApplication> UserAdApplications { get; init; }
 }
