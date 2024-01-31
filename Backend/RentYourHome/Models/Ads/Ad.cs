@@ -1,5 +1,4 @@
 using RentYourHome.Models.Addresses;
-using RentYourHome.Models.Images;
 using RentYourHome.Models.UserAdApplications;
 
 namespace RentYourHome.Models.Ads;
@@ -12,7 +11,7 @@ public class Ad
     public int Size { get; init; }
     public int Price { get; init; }
     public string Description { get; init; }
-    public ICollection<Image> Images { get; init; }
+    public IList<string> Images { get; init; }
 
     public ICollection<UserAdApplication> UserAdApplications { get; init; }
 }
