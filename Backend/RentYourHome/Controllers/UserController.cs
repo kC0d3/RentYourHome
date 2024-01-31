@@ -1,4 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using RentYourHome.Models;
+using RentYourHome.Repositories.UserRepository;
+using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
@@ -6,16 +10,26 @@ namespace RentYourHome.Controllers;
 [Route("api/")]
 public class UserController : ControllerBase
 {
+    private readonly ILogger<UserController> _logger;
+    private readonly IUserRepository _userRepository;
+
+    public UserController(ILogger<UserController> logger, IUserRepository userRepository)
+    {
+        _logger = logger;
+        _userRepository = userRepository;
+    }
+
     [HttpPost("user")]
-    public ActionResult<int> PostUser()
+    public ActionResult<UserDto> PostUser([Required] UserDto user)
     {
         try
         {
-            return Ok();
+            _userRepository.AddUserToDb(user);
+            return Ok(user);
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting user data.");
+            _logger.LogError(e, "Error getting user data.");
             return NotFound("Error getting user data.");
         }
     }
