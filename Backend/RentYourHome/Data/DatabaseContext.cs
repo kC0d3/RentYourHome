@@ -10,7 +10,7 @@ public class DatabaseContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<Image> Images { get; set; }
-    public DbSet<UserAppliedAd> UserAppliedAds { get; set; }
+    public DbSet<UserAdApplication> UserAdApplications { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -23,17 +23,17 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<UserAppliedAd>(entity =>
+        builder.Entity<UserAdApplication>(entity =>
         {
             entity.HasKey(ua => new { ua.UserId, ua.AdId });
-            
+
             entity.HasOne(ua => ua.User)
-                .WithMany(u => u.AppliedAds)
+                .WithMany(u => u.UserAdApplications)
                 .HasForeignKey(ua => ua.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             entity.HasOne(ua => ua.Ad)
-                .WithMany(a => a.AppliedAds)
+                .WithMany(a => a.UserAdApplications)
                 .HasForeignKey(ua => ua.AdId)
                 .OnDelete(DeleteBehavior.NoAction);
         });
