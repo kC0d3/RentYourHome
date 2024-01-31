@@ -10,5 +10,5 @@ public class AdDto
     public int Size { get; init; }
     public int Price { get; init; }
     public string Description { get; init; }
-    public ICollection<Image> Images { get; init; }
+    public ICollection<ImageDto> Images { get; init; }
 }
