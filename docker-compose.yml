@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  rent_backend:
+    image: rent_backend
+    build:
+      context: ./Backend/RentYourHome
+    container_name: rent-backend
+    ports:
+      - "9090:9090"
+    networks:
+      - rent-network
+
+  rent-frontend:
+    container_name: rent-frontend
+    image: rent_frontend
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    networks:
+      - rent-network
+    depends_on:
+      - rent_backend
+    environment:
+      BACKEND_URL: 'http://rent_backend:9090'
+
+networks:
+  rent-network:
