@@ -1,7 +1,5 @@
-using System.Net.Mime;
 using RentYourHome.Models.Addresses;
 using RentYourHome.Models.Ads;
-using RentYourHome.Models.Images;
 using RentYourHome.Models.Users;
 
 namespace RentYourHome.Services.ClassConverterService;
@@ -29,18 +27,8 @@ public class ClassConverterService : IClassConverterService
             Size = ad.Size,
             Price = ad.Price,
             Description = ad.Description,
-            Images = ConvertImageDtoToImage(ad.Images)
+            Images = ad.Images
         };
-    }
-
-    private static ICollection<Image> ConvertImageDtoToImage(IEnumerable<ImageDto> images)
-    {
-        return images.Select(image =>
-                new Image
-                {
-                    FileName = image.FileName
-                })
-            .ToList();
     }
 
     private static Address ConvertAddressDtoToAddress(AddressDto addressDto)
