@@ -1,11 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
     return (
         <div className="navbar">
-                    <button onClick={() => window.location.href='/'}>Home</button>
-                    <button onClick={() => window.location.href='/ads'}>Ads</button>
-                    <button onClick={() => window.location.href='/login'}>Login/Register</button>
+            <Link to="/">
+                <button>Home</button>
+            </Link>
+            <Link to="/ads">
+                <button>Ads</button>
+            </Link>
+            <Link to="/login">
+                <button>Login/Register</button>
+            </Link>
         </div>
     );
 }

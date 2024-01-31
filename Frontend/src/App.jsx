@@ -1,14 +1,16 @@
 import React from 'react';
-import Navbar from "./Components/Navbar.jsx";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from "./Components/HomePage.jsx";
+import LoginPage from './Components/LoginPage.jsx';
 
 function App() {
-
   return (
-    <>
-      <Navbar />
-      <HomePage />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
 }
 
