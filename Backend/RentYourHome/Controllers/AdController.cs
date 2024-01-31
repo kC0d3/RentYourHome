@@ -1,16 +1,28 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using RentYourHome.Models.Ads;
+using RentYourHome.Repositories.AdRepository;
 
 namespace RentYourHome.Controllers;
 
 [ApiController]
-[Route("api/")]
+[Route("api/ads")]
 public class AdController : ControllerBase
 {
-    [HttpPost("ad")]
-    public ActionResult<int> PostAd()
+    private readonly ILogger<UserController> _logger;
+    private readonly IAdRepository _adRepository;
+
+    public AdController(ILogger<UserController> logger, IAdRepository adRepository)
+    {
+        _logger = logger;
+        _adRepository = adRepository;
+    }
+    [HttpPost("create")]
+    public ActionResult<AdDto> PostAd([Required] AdDto ad)
     {
         try
         {
+            _adRepository.AddAdToDb(ad);
             return Ok();
         }
         catch (Exception e)
@@ -20,7 +32,7 @@ public class AdController : ControllerBase
         }
     }
 
-    [HttpGet("ads")]
+    [HttpGet("all")]
     public ActionResult<int> GetAds()
     {
         try

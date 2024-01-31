@@ -6,7 +6,7 @@ using RentYourHome.Repositories.UserRepository;
 namespace RentYourHome.Controllers;
 
 [ApiController]
-[Route("api/")]
+[Route("api/users")]
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
@@ -18,7 +18,7 @@ public class UserController : ControllerBase
         _userRepository = userRepository;
     }
 
-    [HttpPost("user")]
+    [HttpPost("create")]
     public ActionResult<UserDto> PostUser([Required] UserDto user)
     {
         try
@@ -33,7 +33,7 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet("users")]
+    [HttpGet("all")]
     public ActionResult<string> GetUsers()
     {
         try
