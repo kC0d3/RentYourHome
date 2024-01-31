@@ -1,5 +1,5 @@
 using RentYourHome.Data;
-using RentYourHome.Models;
+using RentYourHome.Models.Ads;
 using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Repositories.AdRepository;

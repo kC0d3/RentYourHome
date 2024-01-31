@@ -1,4 +1,4 @@
-using RentYourHome.Models;
+using RentYourHome.Models.Ads;
 
 namespace RentYourHome.Repositories.AdRepository;
 

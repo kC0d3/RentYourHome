@@ -1,4 +1,7 @@
-namespace RentYourHome.Models;
+using RentYourHome.Models.Addresses;
+using RentYourHome.Models.Images;
+
+namespace RentYourHome.Models.Ads;
 
 public class AdDto
 {

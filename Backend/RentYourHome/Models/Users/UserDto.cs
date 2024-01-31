@@ -1,4 +1,6 @@
-namespace RentYourHome.Models;
+using RentYourHome.Models.Addresses;
+
+namespace RentYourHome.Models.Users;
 
 public class UserDto
 {

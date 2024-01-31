@@ -1,4 +1,8 @@
-namespace RentYourHome.Models;
+using RentYourHome.Models.Addresses;
+using RentYourHome.Models.Ads;
+using RentYourHome.Models.UserAdApplications;
+
+namespace RentYourHome.Models.Users;
 
 public class User
 {

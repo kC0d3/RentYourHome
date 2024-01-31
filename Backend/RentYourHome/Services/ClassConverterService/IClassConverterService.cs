@@ -1,4 +1,5 @@
-using RentYourHome.Models;
+using RentYourHome.Models.Ads;
+using RentYourHome.Models.Users;
 
 namespace RentYourHome.Services.ClassConverterService;
 

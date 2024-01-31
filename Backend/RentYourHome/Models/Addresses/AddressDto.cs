@@ -1,4 +1,4 @@
-namespace RentYourHome.Models;
+namespace RentYourHome.Models.Addresses;
 
 public class AddressDto
 {

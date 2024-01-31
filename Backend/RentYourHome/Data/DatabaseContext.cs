@@ -1,6 +1,10 @@
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
-using RentYourHome.Models;
+using RentYourHome.Models.Addresses;
+using RentYourHome.Models.Ads;
+using RentYourHome.Models.Images;
+using RentYourHome.Models.UserAdApplications;
+using RentYourHome.Models.Users;
 
 namespace RentYourHome.Data;
 

@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
-using RentYourHome.Models;
+using RentYourHome.Models.Users;
 using RentYourHome.Repositories.UserRepository;
-using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 

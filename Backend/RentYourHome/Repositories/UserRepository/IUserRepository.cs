@@ -1,4 +1,4 @@
-using RentYourHome.Models;
+using RentYourHome.Models.Users;
 
 namespace RentYourHome.Repositories.UserRepository;
 
