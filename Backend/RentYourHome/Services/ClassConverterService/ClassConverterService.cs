@@ -12,7 +12,13 @@ public class ClassConverterService : IClassConverterService
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            Address = user.Address
+            Address = new Address
+            {
+                ZipCode = user.Address.ZipCode,
+                City = user.Address.City,
+                Street = user.Address.Street,
+                HouseNumber = user.Address.HouseNumber
+            }
         };
     }
 
@@ -20,7 +26,13 @@ public class ClassConverterService : IClassConverterService
     {
         return new Ad
         {
-            Address = ad.Address,
+            Address = new Address
+            {
+                ZipCode = ad.Address.ZipCode,
+                City = ad.Address.City,
+                Street = ad.Address.Street,
+                HouseNumber = ad.Address.HouseNumber
+            },
             Rooms = ad.Rooms,
             Size = ad.Size,
             Price = ad.Price,
