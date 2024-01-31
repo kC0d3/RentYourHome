@@ -10,5 +10,5 @@ public class Ad
     public string Description { get; init; }
     public ICollection<Image> Images { get; init; }
 
-    public ICollection<UserAppliedAd> AppliedAds { get; init; }
+    public ICollection<UserAdApplication> UserAdApplications { get; init; }
 }
