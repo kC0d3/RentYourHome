@@ -19,7 +19,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("create")]
-    public ActionResult<UserDto> PostUser([Required] UserDto user)
+    public ActionResult<UserReqDto> PostUser([Required] UserReqDto user)
     {
         try
         {
@@ -47,12 +47,12 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet("user/{id}")]
-    public ActionResult<int> GetUserById(int id)
+    [HttpGet("user/{userName}")]
+    public ActionResult<UserDto> GetUserByUserName(string userName)
     {
         try
         {
-            return Ok();
+            return Ok(_userRepository.GetUserByUserName(userName));
         }
         catch (Exception e)
         {
