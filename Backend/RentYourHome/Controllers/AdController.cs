@@ -17,8 +17,9 @@ public class AdController : ControllerBase
         _logger = logger;
         _adRepository = adRepository;
     }
+
     [HttpPost("create")]
-    public ActionResult<AdDto> PostAd([Required] AdDto ad)
+    public ActionResult<AdReqDto> PostAd([Required] AdReqDto ad)
     {
         try
         {
@@ -33,15 +34,15 @@ public class AdController : ControllerBase
     }
 
     [HttpGet("all")]
-    public ActionResult<int> GetAds()
+    public ActionResult<ICollection<AdDto>> GetAllAds()
     {
         try
         {
-            return Ok(1);
+            return Ok(_adRepository.GetAllAds());
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting ad data.");
+            _logger.LogError(e, "Error getting ad data.");
             return NotFound("Error getting ad data.");
         }
     }
