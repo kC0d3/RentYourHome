@@ -1,4 +1,5 @@
 using RentYourHome.Models.Addresses;
+using RentYourHome.Models.Images;
 
 namespace RentYourHome.Models.Ads;
 
@@ -9,5 +10,5 @@ public class AdDto
     public int Size { get; init; }
     public int Price { get; init; }
     public string Description { get; init; }
-    public IList<string> Images { get; init; }
+    public ICollection<string> Images { get; init; }
 }
