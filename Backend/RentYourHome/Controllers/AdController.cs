@@ -24,7 +24,7 @@ public class AdController : ControllerBase
         try
         {
             _adRepository.AddAdToDb(ad);
-            return Ok();
+            return Ok(ad);
         }
         catch (Exception e)
         {

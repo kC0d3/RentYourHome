@@ -12,7 +12,7 @@ using RentYourHome.Data;
 namespace RentYourHome.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240201084751_InitialCreates")]
+    [Migration("20240201121152_InitialCreates")]
     partial class InitialCreates
     {
         /// <inheritdoc />
