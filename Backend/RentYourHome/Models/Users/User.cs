@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using RentYourHome.Models.Addresses;
 using RentYourHome.Models.Ads;
 using RentYourHome.Models.UserAdApplications;
@@ -11,7 +12,6 @@ public class User
     public string FirstName { get; init; }
     public string LastName { get; init; }
     public string Email { get; init; }
-    public Address Address { get; init; }
     public bool Accepted { get; set; }
 
     public ICollection<Ad> PublishedAds { get; init; }
