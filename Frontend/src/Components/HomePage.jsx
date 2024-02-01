@@ -3,7 +3,7 @@ import Navbar from "./Navbar.jsx";
 import FiltersBar from "./FiltersBar.jsx";
 
 function HomePage() {
-    const [data, setData] = useState("");
+    const [adsData, setAdsData] = useState([]);
     const [filters, setFilters] = useState({
         location: '',
         minPrice: '',
@@ -17,11 +17,11 @@ function HomePage() {
     useEffect(() => {
         const queryParams = new URLSearchParams(filters).toString();
 
-        fetch(`/api/users?${queryParams}`)
-            .then(response => response.text())
-            .then(d => {
-                setData(d);
-                console.log(d);
+        fetch(`/api/ads/all?${queryParams}`)
+            .then(response => response.json())
+            .then(data => {
+                    setAdsData(data);
+                    console.log(data);
             }
             )
             .catch(error => console.log(error))
@@ -42,7 +42,18 @@ function HomePage() {
                     <div className="filter-area">
                         <FiltersBar onFilter={handleFilterChange} />
                         <br></br>
-                        <div className="data-area">{data}</div>
+                        <div className="data-area">
+                            {adsData.map((ad, index) => (
+                                <div key={index} className="card">
+                                    <div>Location: {`${ad.address.city}, ${ad.address.street}, ${ad.address.houseNumber}`}</div>
+                                    <div>Rooms: {ad.rooms}</div>
+                                    <div>Size: {ad.size}</div>
+                                    {ad.images.map((imageName, index) => (
+                                        <img key={index} src={`/api/images/${imageName}`} alt="Ad" />
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
