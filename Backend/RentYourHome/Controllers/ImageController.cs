@@ -11,7 +11,7 @@ public class ImageController : ControllerBase
     private readonly string zipDirectory = "C:/RentYourHome/Zips";
 
     [HttpPost("uploads")]
-    public IActionResult Upload(IFormFileCollection files)
+    public IActionResult UploadImages(IFormFileCollection files)
     {
         if (files != null && files.Count > 0)
         {
@@ -52,7 +52,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpPost("upload")]
-    public IActionResult Upload(IFormFile file)
+    public IActionResult UploadImage(IFormFile file)
     {
         if (file != null && file.Length > 0)
         {
