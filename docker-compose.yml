@@ -25,6 +25,14 @@ services:
       - rent_backend
     environment:
       BACKEND_URL: 'http://rent_backend:9090'
-
+  db:
+    image: mcr.microsoft.com/mssql/server
+    container_name: db
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=yourStrong(!)Password
+    ports:
+      - "1435:1433"
 networks:
   rent-network:
+
