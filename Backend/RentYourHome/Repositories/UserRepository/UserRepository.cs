@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RentYourHome.Data;
 using RentYourHome.Models.Users;
 using RentYourHome.Services.ClassConverterService;
@@ -13,10 +14,21 @@ public class UserRepository : IUserRepository
         _classConverterService = classConverterService;
     }
 
-    public void AddUserToDb(UserDto user)
+    public void AddUserToDb(UserReqDto user)
     {
         using var dbContext = new DatabaseContext();
-        dbContext.Add(_classConverterService.ConvertToDbClass(user));
+        dbContext.Add(_classConverterService.UserReqDtoToUser(user));
         dbContext.SaveChanges();
+    }
+
+    public UserDto GetUserByUserName(string userName)
+    {
+        using var dbContext = new DatabaseContext();
+        return _classConverterService.UserToUserDto(dbContext.Users
+            .Include(u => u.PublishedAds)
+            .ThenInclude(a => a.Images)
+            .Include(u => u.PublishedAds)
+            .ThenInclude(a => a.Address)
+            .FirstOrDefault(u => u.UserName == userName));
     }
 }

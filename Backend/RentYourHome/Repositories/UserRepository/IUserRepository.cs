@@ -4,5 +4,6 @@ namespace RentYourHome.Repositories.UserRepository;
 
 public interface IUserRepository
 {
-    void AddUserToDb(UserDto user);
+    void AddUserToDb(UserReqDto user);
+    UserDto GetUserByUserName(string userName);
 }
