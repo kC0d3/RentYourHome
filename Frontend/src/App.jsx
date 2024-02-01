@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from "./Components/HomePage.jsx";
+import LoginPage from './Components/LoginPage.jsx';
 
 function App() {
-
-  const [data, setData] = useState("null");
-  useEffect(() => {
-    fetch('api/users/all')
-      .then(response => response.text())
-      .then(d => {
-        setData(d);
-        console.log(d);
-      }
-      )
-      .catch(error => console.log(error))
-  }, []);
-
   return (
-    <>
-      <div>{data}</div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
 }
 

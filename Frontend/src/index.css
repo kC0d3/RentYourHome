@@ -1,3 +1,4 @@
+/* Global */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -24,8 +25,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  display: block;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -65,4 +65,185 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+/* End of global styles */
+
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #333;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+
+/* Homepage */
+.homepage-container {
+  display: block;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Filter Bar*/
+.filters {
+  display: grid;
+  grid-template-columns: t(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.filter-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-input {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: #333;
+  flex: 1; /* Ensures that the inputs in a group take up equal space */
+}
+
+.location-input {
+  flex: 2; /* Location input takes up more space */
+}
+
+/* Styles to prevent number input spinners */
+.filter-input[type="number"]::-webkit-inner-spin-button,
+.filter-input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Homepage content area */
+.content-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns of equal size */
+  gap: 1rem; /* Spacing between cards */
+}
+
+.card {
+  display: flex;
+  flex-direction: column; /* Stack image on top of info */
+  align-items: center; /* Center items horizontally */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.card img {
+  max-width: 100%; /* Make sure the image is contained within the card */
+  border-radius: 4px;
+  margin-bottom: 0.5rem; /* Spacing between the image and the info */
+}
+
+.card .info {
+  text-align: center; /* Center the text in the info area */
+}
+
+
+/* Login Page*/
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-page p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+.login-form p {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.login-form input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+/* Registration Form */
+.registration-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.registration-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.registration-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.registration-content input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.cancel-button {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-button {
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 2rem;
+  color: white;
+}
+
+.close-button:focus {
+  outline: none;
+  border: none;
 }
