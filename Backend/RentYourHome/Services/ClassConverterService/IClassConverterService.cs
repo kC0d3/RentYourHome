@@ -5,6 +5,8 @@ namespace RentYourHome.Services.ClassConverterService;
 
 public interface IClassConverterService
 {
-    User ConvertToDbClass(UserDto user);
-    Ad ConvertToDbClass(AdDto ad);
+    User UserReqDtoToUser(UserReqDto user);
+    Ad AdReqDtoToAd(AdReqDto ad);
+    ICollection<AdDto> AdsToAdDtos(IEnumerable<Ad> ads);
+    UserDto UserToUserDto(User user);
 }
