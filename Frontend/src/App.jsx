@@ -4,7 +4,7 @@ function App() {
 
   const [data, setData] = useState("null");
   useEffect(() => {
-    fetch('/api/users')
+    fetch('api/users/all')
       .then(response => response.text())
       .then(d => {
         setData(d);
