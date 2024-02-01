@@ -13,12 +13,13 @@ function RegistrationForm({ setShowRegistration }) {
                 <input type="text" placeholder="LastName" />
                 <input type="text" placeholder="Email" />
                 <input type="text" placeholder="UserName" />
-                <input type="text" placeholder="Password" />
+                <input type="password" placeholder="Password" />
                 <button>Submit</button>
             </div>
             <div className="cancel-button">
+                <button onClick={handleClose}>Cancel</button>
                 <Link to="/">
-                    <button>Cancel</button>
+                    <button>Home</button>
                 </Link>
             </div>
         </div>
