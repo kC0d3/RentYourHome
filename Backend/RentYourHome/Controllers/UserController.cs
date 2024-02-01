@@ -1,26 +1,39 @@
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using RentYourHome.Models.Users;
+using RentYourHome.Repositories.UserRepository;
 
 namespace RentYourHome.Controllers;
 
 [ApiController]
-[Route("api/")]
+[Route("api/users")]
 public class UserController : ControllerBase
 {
-    [HttpPost("user")]
-    public ActionResult<int> PostUser()
+    private readonly ILogger<UserController> _logger;
+    private readonly IUserRepository _userRepository;
+
+    public UserController(ILogger<UserController> logger, IUserRepository userRepository)
+    {
+        _logger = logger;
+        _userRepository = userRepository;
+    }
+
+    [HttpPost("create")]
+    public ActionResult<UserReqDto> PostUser([Required] UserReqDto user)
     {
         try
         {
-            return Ok();
+            _userRepository.AddUserToDb(user);
+            return Ok(user);
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting user data.");
+            _logger.LogError(e, "Error getting user data.");
             return NotFound("Error getting user data.");
         }
     }
 
-    [HttpGet("users")]
+    [HttpGet("all")]
     public ActionResult<string> GetUsers()
     {
         try
@@ -34,12 +47,12 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet("user/{id}")]
-    public ActionResult<int> GetUserById(int id)
+    [HttpGet("user/{userName}")]
+    public ActionResult<UserDto> GetUserByUserName(string userName)
     {
         try
         {
-            return Ok();
+            return Ok(_userRepository.GetUserByUserName(userName));
         }
         catch (Exception e)
         {

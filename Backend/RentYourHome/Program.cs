@@ -1,3 +1,7 @@
+using RentYourHome.Repositories.AdRepository;
+using RentYourHome.Repositories.UserRepository;
+using RentYourHome.Services.ClassConverterService;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IAdRepository, AdRepository>();
+builder.Services.AddSingleton<IClassConverterService, ClassConverterService>();
 
 var app = builder.Build();
 
