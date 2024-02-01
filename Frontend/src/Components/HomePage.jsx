@@ -20,8 +20,8 @@ function HomePage() {
         fetch(`/api/ads/all?${queryParams}`)
             .then(response => response.json())
             .then(data => {
-                    setAdsData(data);
-                    console.log(data);
+                setAdsData(data);
+                console.log(data);
             }
             )
             .catch(error => console.log(error))
@@ -38,25 +38,28 @@ function HomePage() {
         <>
             <Navbar />
             <div className="homepage-container">
-                <div className="content-area">
                     <div className="filter-area">
                         <FiltersBar onFilter={handleFilterChange} />
                         <br></br>
-                        <div className="data-area">
+                            </div>
+                <div className="content-area">
                             {adsData.map((ad, index) => (
                                 <div key={index} className="card">
-                                    <div>Location: {`${ad.address.city}, ${ad.address.street}, ${ad.address.houseNumber}`}</div>
+                                    <div className="image-container">
+                                        {ad.images.map((imageName, index) => (
+                                            <img key={index} src={`/api/images/${imageName}`} alt="Ad" />
+                                        ))}
+                                    </div>
+                                    <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
                                     <div>Rooms: {ad.rooms}</div>
-                                    <div>Size: {ad.size}</div>
-                                    {ad.images.map((imageName, index) => (
-                                        <img key={index} src={`/api/images/${imageName}`} alt="Ad" />
-                                    ))}
+                                    <div>Size: {ad.size} sqm</div>
+                                    <div>Price: {ad.price} HUF</div>
+                                    <div>Description: {ad.description}</div>
+                                    <br></br>
                                 </div>
                             ))}
-                        </div>
                     </div>
                 </div>
-            </div>
         </>
     );
 }

@@ -86,16 +86,14 @@ button:focus-visible {
 
 /* Homepage */
 .homepage-container {
-  display: block;
-  grid-template-rows: auto 1fr auto;
-  gap: 1rem;
+  /* display: block; */
   padding: 1rem;
 }
 
-/* Filter Bar*/
+/* Filters */
 .filters {
   display: grid;
-  grid-template-columns: t(auto-fit, minmax(200px, 1fr));
+  grid-template-rows: auto;
   gap: 0.5rem;
   margin: 0.5rem 0;
 }
@@ -128,28 +126,43 @@ button:focus-visible {
 /* Homepage content area */
 .content-area {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns of equal size */
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   gap: 1rem; /* Spacing between cards */
+  padding: 1rem;
+  font-size: large;
 }
+
+/* .image-container {
+  display: flex;
+  gap: 0.5rem;
+} */
 
 .card {
-  display: flex;
-  flex-direction: column; /* Stack image on top of info */
-  align-items: center; /* Center items horizontally */
-  border: 1px solid #ddd;
+  display: grid;
+  grid-template-columns: 1fr, 2fr;
+  align-items: center;
+  border: 2px solid #ddd;
   border-radius: 8px;
+  overflow: hidden;
   padding: 1rem;
-  background-color: #fff;
+  background-color: #1a1a1a;
+  color: white;
+  margin-bottom: 1rem;
 }
 
+
 .card img {
-  max-width: 100%; /* Make sure the image is contained within the card */
+  width: 100%;
+  height: auto;
+  object-fit: cover;
   border-radius: 4px;
-  margin-bottom: 0.5rem; /* Spacing between the image and the info */
 }
 
 .card .info {
-  text-align: center; /* Center the text in the info area */
+  padding-left: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
 }
 
 
