@@ -1,7 +1,9 @@
+using System.Collections.ObjectModel;
 using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using RentYourHome.Models.Addresses;
 using RentYourHome.Models.Ads;
+using RentYourHome.Models.Images;
 using RentYourHome.Models.UserAdApplications;
 using RentYourHome.Models.Users;
 
@@ -13,6 +15,7 @@ public class DatabaseContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<UserAdApplication> UserAdApplications { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
