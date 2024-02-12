@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using RentYourHome.Models.Ads;
 using RentYourHome.Repositories.AdRepository;
+using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
@@ -11,15 +12,18 @@ public class AdController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
     private readonly IAdRepository _adRepository;
+    private readonly IClassConverterService _classConverterService;
 
-    public AdController(ILogger<UserController> logger, IAdRepository adRepository)
+    public AdController(ILogger<UserController> logger, IAdRepository adRepository,
+        IClassConverterService classConverterService)
     {
         _logger = logger;
         _adRepository = adRepository;
+        _classConverterService = classConverterService;
     }
 
     [HttpPost]
-    public ActionResult<AdReqDto> PostAd([Required] AdReqDto ad)
+    public ActionResult<AdReqDto> CreateAd([Required] AdReqDto ad)
     {
         try
         {
@@ -34,11 +38,11 @@ public class AdController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<ICollection<AdDto>> GetAllAds()
+    public async Task<ActionResult<ICollection<AdDto>>> GetAllAds()
     {
         try
         {
-            return Ok(_adRepository.GetAllAds());
+            return Ok(await _adRepository.GetAllAds());
         }
         catch (Exception e)
         {
@@ -48,11 +52,12 @@ public class AdController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<int> GetAdById(int id)
+    public async Task<ActionResult<AdDto>> GetAdById(int id)
     {
         try
         {
-            return Ok();
+            var ad = await _adRepository.GetAdById(id);
+            return Ok(_classConverterService.AdToAdDto(ad));
         }
         catch (Exception e)
         {
@@ -62,11 +67,13 @@ public class AdController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<int> DeleteAdById(int id)
+    public async Task<ActionResult<AdDto>> DeleteAdById(int id)
     {
         try
         {
-            return Ok();
+            var ad = await _adRepository.GetAdById(id);
+            _adRepository.DeleteAd(ad);
+            return Ok(_classConverterService.AdToAdDto(ad));
         }
         catch (Exception e)
         {
