@@ -28,6 +28,7 @@ public class ClassConverterService : IClassConverterService
             Size = ad.Size,
             Price = ad.Price,
             Description = ad.Description,
+            Approved = ad.Approved,
             Images = StringsToImages(ad.Images),
             UserId = ad.UserId
         };
@@ -38,11 +39,13 @@ public class ClassConverterService : IClassConverterService
     {
         return ads.Select(ad => new AdDto
         {
+            Id = ad.Id,
             Address = AddressToAddressDto(ad.Address),
             Rooms = ad.Rooms,
             Size = ad.Size,
             Price = ad.Price,
             Description = ad.Description,
+            Approved = ad.Approved,
             Images = ImagesToStrings(ad.Images),
         }).ToList();
     }

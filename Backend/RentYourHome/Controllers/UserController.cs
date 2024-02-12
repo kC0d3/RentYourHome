@@ -19,7 +19,7 @@ public class UserController : ControllerBase
         _userRepository = userRepository;
     }
 
-    [HttpPost("create")]
+    [HttpPost]
     public ActionResult<UserReqDto> PostUser([Required] UserReqDto user)
     {
         try
@@ -34,7 +34,7 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet("all")]
+    [HttpGet]
     public ActionResult<string> GetUsers()
     {
         try
@@ -43,12 +43,12 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting user data.");
+            _logger.LogError(e, "Error getting user data.");
             return NotFound("Error getting user data.");
         }
     }
 
-    [HttpGet("user/{userName}")]
+    [HttpGet("{userName}")]
     public ActionResult<UserDto> GetUserByUserName(string userName)
     {
         try
@@ -57,12 +57,12 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting user data.");
+            _logger.LogError(e, "Error getting user data.");
             return NotFound("Error getting user data.");
         }
     }
 
-    [HttpDelete("user/{id}")]
+    [HttpDelete("{id}")]
     public ActionResult<int> DeleteUserById(int id)
     {
         try
@@ -71,7 +71,7 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting user data.");
+            _logger.LogError(e, "Error getting user data.");
             return NotFound("Error getting user data.");
         }
     }

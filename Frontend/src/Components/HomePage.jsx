@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import FiltersBar from "./FiltersBar.jsx";
 
 function HomePage() {
+    const navigate = useNavigate();
     const [adsData, setAdsData] = useState([]);
     const [filters, setFilters] = useState({
         location: '',
@@ -14,18 +16,18 @@ function HomePage() {
         maxRooms: '',
     });
 
-    useEffect(() => {
+    const fetchAds = () => {
         const queryParams = new URLSearchParams(filters).toString();
 
-        fetch(`/api/ads/all`)
+        fetch(`/api/ads/all?${queryParams}`)
             .then(response => response.json())
             .then(data => {
                 setAdsData(data);
                 console.log(data);
             }
             )
-            .catch(error => console.log(error))
-    }, []);
+            .catch(error => console.log("Error fetching ads:", error))
+    };
 
     const handleFilterChange = (filterType, value) => {
         setFilters(prevFilters => ({
@@ -34,17 +36,21 @@ function HomePage() {
         console.log('Filter selected:', filterType, value)
     }
 
+    const handleSubmitFilters = () => {
+        fetchAds();
+    }
+
     return (
         <>
             <Navbar />
             <div className="homepage-container">
                     <div className="filter-area">
-                        <FiltersBar onFilter={handleFilterChange} />
+                        <FiltersBar onFilterChange={handleFilterChange} onSubmitFilters={handleSubmitFilters} />
                         <br></br>
                             </div>
                 <div className="content-area">
                             {adsData.map((ad, index) => (
-                                <div key={index} className="card">
+                                <div key={index} className="card" onClick={() => navigate(`/ads/${ad.id}`)}>
                                     <div className="image-container">
                                         {ad.images.map((imageName, index) => (
                                             <img key={index} src={`/api/images/${imageName}`} alt="Ad" />

@@ -7,17 +7,16 @@ namespace RentYourHome.Controllers;
 [Route("api/images")]
 public class ImageController : ControllerBase
 {
-    private readonly string uploadDirectory = "C:/RentYourHome/Images";
-    private readonly string zipDirectory = "C:/RentYourHome/Zips";
+    private readonly string _uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "AdsImages");
 
-    [HttpPost("uploads")]
+    [HttpPost]
     public IActionResult UploadImages(IFormFileCollection files)
     {
         if (files != null && files.Count > 0)
         {
-            if (!Directory.Exists(uploadDirectory))
+            if (!Directory.Exists(_uploadDirectory))
             {
-                Directory.CreateDirectory(uploadDirectory);
+                Directory.CreateDirectory(_uploadDirectory);
             }
 
             try
@@ -30,7 +29,7 @@ public class ImageController : ControllerBase
                     }
 
                     string fileName = Path.GetFileName(file.FileName);
-                    string filePath = Path.Combine(uploadDirectory, fileName);
+                    string filePath = Path.Combine(_uploadDirectory, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
@@ -51,48 +50,10 @@ public class ImageController : ControllerBase
         }
     }
 
-    [HttpPost("upload")]
-    public IActionResult UploadImage(IFormFile file)
-    {
-        if (file != null && file.Length > 0)
-        {
-            try
-            {
-                if (!IsImageFile(file))
-                {
-                    return BadRequest(new { Message = "Invalid file format. Please upload an image file." });
-                }
-
-                if (!Directory.Exists(uploadDirectory))
-                {
-                    Directory.CreateDirectory(uploadDirectory);
-                }
-
-                string fileName = Path.GetFileName(file.FileName);
-                string filePath = Path.Combine(uploadDirectory, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
-
-                return Ok(new { Message = "Image uploaded successfully!" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Message = "Error: " + ex.Message });
-            }
-        }
-        else
-        {
-            return BadRequest(new { Message = "Please select an image file to upload." });
-        }
-    }
-
     [HttpGet("{imageName}")]
     public IActionResult GetImage(string imageName)
     {
-        string imagePath = Path.Combine(uploadDirectory, imageName);
+        string imagePath = Path.Combine(_uploadDirectory, imageName);
 
         if (System.IO.File.Exists(imagePath))
         {
@@ -104,54 +65,6 @@ public class ImageController : ControllerBase
             return NotFound();
         }
     }
-
-    /*[HttpGet("{imageNames}")]
-    public IActionResult GetImages(string imageNames)
-    {
-        List<string> imageNameList = imageNames.Split(' ').ToList();
-
-        List<byte[]> images = new List<byte[]>();
-
-        foreach (var imageName in imageNameList)
-        {
-            var imagePath = Path.Combine(uploadDirectory, imageName);
-
-            if (System.IO.File.Exists(imagePath))
-            {
-                var imageFileStream = System.IO.File.ReadAllBytes(imagePath);
-                images.Add(imageFileStream);
-            }
-        }
-
-        if (images.Any())
-        {
-            var zipStream = new MemoryStream();
-            using (var archive = new ZipArchive(zipStream, ZipArchiveMode.Create, true))
-            {
-                for (int i = 0; i < images.Count; i++)
-                {
-                    var entry = archive.CreateEntry($"image_{i}.jpg");
-                    using (var entryStream = entry.Open())
-                    {
-                        entryStream.Write(images[i], 0, images[i].Length);
-                    }
-                }
-            }
-
-            zipStream.Seek(0, SeekOrigin.Begin);
-
-            if (!Directory.Exists(zipDirectory))
-            {
-                Directory.CreateDirectory(zipDirectory);
-            }
-
-            return File(zipStream, zipDirectory, "images.zip");
-        }
-        else
-        {
-            return NotFound();
-        }
-    }*/
 
     private static bool IsImageFile(IFormFile file)
     {
