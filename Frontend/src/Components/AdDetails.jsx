@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function AdDetails() {
-    const { id } = useParams; // Get ID from URL parameter
+    const { id } = useParams(); // Get ID from URL parameter
     const [adDetails, setAdDetails] = useState(null);
 
     useEffect(() => {
@@ -20,19 +20,24 @@ function AdDetails() {
         return <div>Loading...</div>;
     }
 
+    // Check if images is an array and has items
+    const hasImages = Array.isArray(adDetails.images) && adDetails.images.length > 0;
+
     return (
         <div className="ad-details">
             <h1>{adDetails.title}</h1>
-            <div className="image-container">
-                {ad.images.map((imageName, index) => (
-                    <img key={index} src={`/api/images/${imageName}`} alt="Ad" />
-                ))}
-            </div>
-            <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
-            <div>Rooms: {ad.rooms}</div>
-            <div>Size: {ad.size} sqm</div>
-            <div>Price: {ad.price} HUF</div>
-            <div>Description: {ad.description}</div>
+            {hasImages && (
+                <div className="image-container">
+                    {adDetails.images.map((imageName, index) => (
+                        <img key={index} src={`/api/images/${imageName}`} alt={`Ad image ${index + 1}`} />
+                    ))}
+                </div>
+            )}
+            <div>Location: {`${adDetails.address.zipCode}, ${adDetails.address.city}, ${adDetails.address.street} ${adDetails.address.houseNumber}`}</div>
+            <div>Rooms: {adDetails.rooms}</div>
+            <div>Size: {adDetails.size} sqm</div>
+            <div>Price: {adDetails.price} HUF</div>
+            <div>Description: {adDetails.description}</div>
         </div>
     )
 }
