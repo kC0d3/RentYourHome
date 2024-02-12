@@ -5,5 +5,7 @@ namespace RentYourHome.Repositories.AdRepository;
 public interface IAdRepository
 {
     void AddAdToDb(AdReqDto ad);
-    IEnumerable<AdDto> GetAllAds();
+    Task<IEnumerable<AdDto>> GetAllAds();
+    Task<Ad> GetAdById(int id);
+    void DeleteAd(Ad ad);
 }
