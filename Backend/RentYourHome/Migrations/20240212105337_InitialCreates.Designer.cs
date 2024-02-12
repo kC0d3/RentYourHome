@@ -12,8 +12,10 @@ using RentYourHome.Data;
 namespace RentYourHome.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
+
     [Migration("20240201201540_InitialCreate")]
     partial class InitialCreate
+
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
