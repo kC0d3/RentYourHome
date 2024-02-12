@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentYourHome.Models.Users;
 using RentYourHome.Repositories.UserRepository;
+using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
@@ -12,15 +13,18 @@ public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
     private readonly IUserRepository _userRepository;
+    private readonly IClassConverterService _classConverterService;
 
-    public UserController(ILogger<UserController> logger, IUserRepository userRepository)
+    public UserController(ILogger<UserController> logger, IUserRepository userRepository,
+        IClassConverterService classConverterService)
     {
         _logger = logger;
         _userRepository = userRepository;
+        _classConverterService = classConverterService;
     }
 
     [HttpPost]
-    public ActionResult<UserReqDto> PostUser([Required] UserReqDto user)
+    public ActionResult<UserReqDto> CreateUser([Required] UserReqDto user)
     {
         try
         {
@@ -34,26 +38,13 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet]
-    public ActionResult<string> GetUsers()
-    {
-        try
-        {
-            return Ok("The frontend-backend connection is established");
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error getting user data.");
-            return NotFound("Error getting user data.");
-        }
-    }
-
     [HttpGet("{userName}")]
-    public ActionResult<UserDto> GetUserByUserName(string userName)
+    public async Task<ActionResult<UserDto>> GetUserByUserName(string userName)
     {
         try
         {
-            return Ok(_userRepository.GetUserByUserName(userName));
+            var user = await _userRepository.GetUserByUserName(userName);
+            return Ok(_classConverterService.UserToUserDto(user));
         }
         catch (Exception e)
         {
@@ -62,12 +53,30 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpDelete("{id}")]
-    public ActionResult<int> DeleteUserById(int id)
+    /*[HttpPut("{id}")]
+    public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UserDto userDto)
     {
         try
         {
-            return Ok();
+            var user = await _userRepository.GetUserById(id);
+            _userRepository.UpdateUser();
+            return Ok(_classConverterService.UserToUserDto(user));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting user data.");
+            return NotFound("Error getting user data.");
+        }
+    }*/
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<UserDto>> DeleteUserById(int id)
+    {
+        try
+        {
+            var user = await _userRepository.GetUserById(id);
+            _userRepository.DeleteUser(user);
+            return Ok(_classConverterService.UserToUserDto(user));
         }
         catch (Exception e)
         {
