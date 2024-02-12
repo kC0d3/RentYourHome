@@ -1,12 +1,13 @@
+import React from "react";
 
-const FiltersBar=( onFilter )=> {
+const FiltersBar = ({ onFilterChange, onSubmitFilters }) => {
     return (
         <div className="filters">
             <div className="filter-input-group">
                 <input
                     type="text"
                     placeholder="Location"
-                    onChange={(e) => onFilter('location', e.target.value)}
+                    onChange={(e) => onFilterChange('location', e.target.value)}
                     className="filter-input location-input"
                 />
             </div>
@@ -14,13 +15,13 @@ const FiltersBar=( onFilter )=> {
                 <input
                     type="number"
                     placeholder="Min Price"
-                    onChange={(e) => onFilter('minPrice', e.target.value)}
+                    onChange={(e) => onFilterChange('minPrice', e.target.value)}
                     className="filter-input"
                 />
                 <input
                     type="number"
                     placeholder="Max Price"
-                    onChange={(e) => onFilter('maxPrice', e.target.value)}
+                    onChange={(e) => onFilterChange('maxPrice', e.target.value)}
                     className="filter-input"
                 />
             </div>
@@ -28,13 +29,13 @@ const FiltersBar=( onFilter )=> {
                 <input
                     type="number"
                     placeholder="Min Size"
-                    onChange={(e) => onFilter('minSize', e.target.value)}
+                    onChange={(e) => onFilterChange('minSize', e.target.value)}
                     className="filter-input"
                 />
                 <input
                     type="number"
                     placeholder="Max Size"
-                    onChange={(e) => onFilter('maxSize', e.target.value)}
+                    onChange={(e) => onFilterChange('maxSize', e.target.value)}
                     className="filter-input"
                 />
             </div>
@@ -42,15 +43,18 @@ const FiltersBar=( onFilter )=> {
                 <input
                     type="number"
                     placeholder="Min Rooms"
-                    onChange={(e) => onFilter('minRooms', e.target.value)}
+                    onChange={(e) => onFilterChange('minRooms', e.target.value)}
                     className="filter-input"
                 />
                 <input
                     type="number"
                     placeholder="Max Rooms"
-                    onChange={(e) => onFilter('maxRooms', e.target.value)}
+                    onChange={(e) => onFilterChange('maxRooms', e.target.value)}
                     className="filter-input"
                 />
+            </div>
+            <div>
+                <button onClick={onSubmitFilters}>Apply Filters</button>
             </div>
         </div>
     );
