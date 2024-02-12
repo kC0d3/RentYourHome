@@ -21,11 +21,33 @@ public class AdRepository : IAdRepository
         dbContext.SaveChanges();
     }
 
-    public IEnumerable<AdDto> GetAllAds()
+    public async Task<IEnumerable<AdDto>> GetAllAds()
     {
-        using var dbContext = new DatabaseContext();
+        await using var dbContext = new DatabaseContext();
         return _classConverterService.AdsToAdDtos(dbContext.Ads
             .Include(a => a.Images)
             .Include(a => a.Address).ToList());
     }
+
+    public async Task<Ad> GetAdById(int id)
+    {
+        await using var dbContext = new DatabaseContext();
+        return dbContext.Ads.Include(a => a.Address)
+            .Include(a => a.Images)
+            .FirstOrDefault(a => a.Id == id);
+    }
+
+    public void DeleteAd(Ad ad)
+    {
+        using var dbContext = new DatabaseContext();
+        dbContext.Remove(ad);
+        dbContext.SaveChanges();
+    }
+
+    /*public void UpdateAd(Ad ad)
+    {
+        using var dbContext = new DatabaseContext();
+        dbContext.Update(ad);
+        dbContext.SaveChanges();
+    }*/
 }
