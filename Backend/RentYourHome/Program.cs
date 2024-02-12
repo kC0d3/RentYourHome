@@ -19,7 +19,6 @@ AddIdentity();
 
 var app = builder.Build();
 
-AddAdmin();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -29,6 +28,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 AddRoles();
+AddAdmin();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
