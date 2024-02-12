@@ -12,7 +12,7 @@ using RentYourHome.Data;
 namespace RentYourHome.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240201121152_InitialCreates")]
+    [Migration("20240212105337_InitialCreates")]
     partial class InitialCreates
     {
         /// <inheritdoc />
@@ -64,6 +64,9 @@ namespace RentYourHome.Migrations
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Description")
                         .IsRequired()
