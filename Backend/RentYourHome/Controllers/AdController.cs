@@ -18,7 +18,7 @@ public class AdController : ControllerBase
         _adRepository = adRepository;
     }
 
-    [HttpPost("create")]
+    [HttpPost]
     public ActionResult<AdReqDto> PostAd([Required] AdReqDto ad)
     {
         try
@@ -28,12 +28,12 @@ public class AdController : ControllerBase
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting ad data.");
+            _logger.LogError(e, "Error getting ad data.");
             return NotFound("Error getting ad data.");
         }
     }
 
-    [HttpGet("all")]
+    [HttpGet]
     public ActionResult<ICollection<AdDto>> GetAllAds()
     {
         try
@@ -47,7 +47,7 @@ public class AdController : ControllerBase
         }
     }
 
-    [HttpGet("ad/{id}")]
+    [HttpGet("{id}")]
     public ActionResult<int> GetAdById(int id)
     {
         try
@@ -56,12 +56,12 @@ public class AdController : ControllerBase
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting ad data.");
+            _logger.LogError(e, "Error getting ad data.");
             return NotFound("Error getting ad data.");
         }
     }
 
-    [HttpDelete("ad/{id}")]
+    [HttpDelete("{id}")]
     public ActionResult<int> DeleteAdById(int id)
     {
         try
@@ -70,7 +70,7 @@ public class AdController : ControllerBase
         }
         catch (Exception e)
         {
-            //_logger.LogError(e, "Error getting ad data.");
+            _logger.LogError(e, "Error getting ad data.");
             return NotFound("Error getting ad data.");
         }
     }
