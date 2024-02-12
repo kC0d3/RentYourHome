@@ -9,6 +9,7 @@ public class AdReqDto
     public int Size { get; init; }
     public int Price { get; init; }
     public string Description { get; init; }
+    public bool Approved { get; init; }
     public ICollection<string> Images { get; init; }
     public int UserId { get; init; }
 }
