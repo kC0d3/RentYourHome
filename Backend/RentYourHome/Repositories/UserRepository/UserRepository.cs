@@ -21,14 +21,34 @@ public class UserRepository : IUserRepository
         dbContext.SaveChanges();
     }
 
-    public UserDto GetUserByUserName(string userName)
+    public async Task<User> GetUserByUserName(string userName)
     {
-        using var dbContext = new DatabaseContext();
-        return _classConverterService.UserToUserDto(dbContext.Users
+        await using var dbContext = new DatabaseContext();
+        return dbContext.Users
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Images)
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Address)
-            .FirstOrDefault(u => u.UserName == userName));
+            .FirstOrDefault(u => u.UserName == userName);
+    }
+    
+    public async Task<User> GetUserById(int id)
+    {
+        await using var dbContext = new DatabaseContext();
+        return dbContext.Users.FirstOrDefault(u => u.Id == id);
+    }
+
+    /*public void UpdateUser(User user)
+    {
+        using var dbContext = new DatabaseContext();
+        dbContext.Update(user);
+        dbContext.SaveChanges();
+    }*/
+    
+    public void DeleteUser(User user)
+    {
+        using var dbContext = new DatabaseContext();
+        dbContext.Remove(user);
+        dbContext.SaveChanges();
     }
 }
