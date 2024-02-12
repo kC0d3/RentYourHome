@@ -19,7 +19,7 @@ function HomePage() {
     const fetchAds = () => {
         const queryParams = new URLSearchParams(filters).toString();
 
-        fetch(`/api/ads/all?${queryParams}`)
+        fetch(`/api/ads?${queryParams}`)
             .then(response => response.json())
             .then(data => {
                 setAdsData(data);
