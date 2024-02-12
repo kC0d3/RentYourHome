@@ -9,4 +9,5 @@ public interface IClassConverterService
     Ad AdReqDtoToAd(AdReqDto ad);
     ICollection<AdDto> AdsToAdDtos(IEnumerable<Ad> ads);
     UserDto UserToUserDto(User user);
+    AdDto AdToAdDto(Ad ad);
 }
