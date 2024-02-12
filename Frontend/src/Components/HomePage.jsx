@@ -17,7 +17,7 @@ function HomePage() {
     useEffect(() => {
         const queryParams = new URLSearchParams(filters).toString();
 
-        fetch(`/api/ads/all?${queryParams}`)
+        fetch(`/api/ads/all`)
             .then(response => response.json())
             .then(data => {
                 setAdsData(data);
@@ -25,7 +25,7 @@ function HomePage() {
             }
             )
             .catch(error => console.log(error))
-    }, [filters]);
+    }, []);
 
     const handleFilterChange = (filterType, value) => {
         setFilters(prevFilters => ({

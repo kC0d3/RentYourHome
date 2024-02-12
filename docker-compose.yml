@@ -6,6 +6,9 @@ services:
     build:
       context: ./Backend/RentYourHome
     container_name: rent-backend
+    depends_on: 
+     - db
+    command: ["dotnet", "ef" , "database update"]
     ports:
       - "9090:9090"
     networks:
