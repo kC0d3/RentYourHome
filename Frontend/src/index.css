@@ -132,11 +132,6 @@ button:focus-visible {
   font-size: large;
 }
 
-/* .image-container {
-  display: flex;
-  gap: 0.5rem;
-} */
-
 .card {
   display: grid;
   grid-template-columns: 1fr, 2fr;
@@ -199,7 +194,7 @@ button:focus-visible {
 }
 
 
-/* Registration Form */
+/* Registration Form Popup*/
 .registration-popup {
   position: fixed;
   top: 0;
@@ -259,4 +254,11 @@ button:focus-visible {
 .close-button:focus {
   outline: none;
   border: none;
+}
+
+/* Ad Details Page */
+.ad-details {
+  padding: 1rem;
+  color: white;
+  /* TODO: add styles */
 }
