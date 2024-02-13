@@ -1,3 +1,3 @@
 namespace RentYourHome.Services.Authentication;
 
-public record AuthRequest(string UserName, string Password);
+public record AuthRequest(string Username, string Password);

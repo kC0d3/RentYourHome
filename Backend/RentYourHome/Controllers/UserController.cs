@@ -38,12 +38,12 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpGet("{userName}")]
-    public async Task<ActionResult<UserDto>> GetUserByUserName(string userName)
+    [HttpGet("{username}")]
+    public async Task<ActionResult<UserDto>> GetUserByUserName(string username)
     {
         try
         {
-            var user = await _userRepository.GetUserByUserName(userName);
+            var user = await _userRepository.GetUserByUserName(username);
             return Ok(_classConverterService.UserToUserDto(user));
         }
         catch (Exception e)
@@ -64,7 +64,7 @@ public class UserController : ControllerBase
                 return NotFound();
             }
 
-            user.UserName = userReqDto.UserName;
+            user.Username = userReqDto.Username;
             user.FirstName = userReqDto.FirstName;
             user.LastName = userReqDto.LastName;
             user.Email = userReqDto.Email;

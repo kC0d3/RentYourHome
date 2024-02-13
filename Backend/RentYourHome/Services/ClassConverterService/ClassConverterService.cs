@@ -12,7 +12,7 @@ public class ClassConverterService : IClassConverterService
     {
         return new User
         {
-            UserName = user.UserName,
+            Username = user.Username,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
@@ -69,7 +69,7 @@ public class ClassConverterService : IClassConverterService
         return new UserDto
         {
             Id = user.Id,
-            UserName = user.UserName,
+            Username = user.Username,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,

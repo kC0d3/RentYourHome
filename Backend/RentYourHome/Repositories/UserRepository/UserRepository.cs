@@ -21,7 +21,7 @@ public class UserRepository : IUserRepository
         dbContext.SaveChanges();
     }
 
-    public async Task<User?> GetUserByUserName(string userName)
+    public async Task<User?> GetUserByUserName(string username)
     {
         await using var dbContext = new DatabaseContext();
         return dbContext.Users
@@ -29,7 +29,7 @@ public class UserRepository : IUserRepository
             .ThenInclude(a => a.Images)
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Address)
-            .FirstOrDefault(u => u.UserName == userName);
+            .FirstOrDefault(u => u.Username == username);
     }
 
     public async Task<User?> GetUserById(int id)
