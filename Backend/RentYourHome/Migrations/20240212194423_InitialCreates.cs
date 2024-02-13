@@ -11,22 +11,6 @@ namespace RentYourHome.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -49,7 +33,6 @@ namespace RentYourHome.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AddressId = table.Column<int>(type: "int", nullable: false),
                     Rooms = table.Column<int>(type: "int", nullable: false),
                     Size = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
@@ -61,15 +44,32 @@ namespace RentYourHome.Migrations
                 {
                     table.PrimaryKey("PK_Ads", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ads_Addresses_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Addresses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Ads_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Ads_AdId",
+                        column: x => x.AdId,
+                        principalTable: "Ads",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -81,7 +81,7 @@ namespace RentYourHome.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AdId = table.Column<int>(type: "int", nullable: true)
+                    AdId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,7 +90,8 @@ namespace RentYourHome.Migrations
                         name: "FK_Images_Ads_AdId",
                         column: x => x.AdId,
                         principalTable: "Ads",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,9 +117,10 @@ namespace RentYourHome.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ads_AddressId",
-                table: "Ads",
-                column: "AddressId");
+                name: "IX_Addresses_AdId",
+                table: "Addresses",
+                column: "AdId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ads_UserId",
@@ -140,6 +142,9 @@ namespace RentYourHome.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Addresses");
+
+            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
@@ -147,9 +152,6 @@ namespace RentYourHome.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ads");
-
-            migrationBuilder.DropTable(
-                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Users");

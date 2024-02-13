@@ -12,7 +12,7 @@ using RentYourHome.Data;
 namespace RentYourHome.Migrations.Users
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20240212143017_InitialCreates")]
+    [Migration("20240212194436_InitialCreates")]
     partial class InitialCreates
     {
         /// <inheritdoc />
