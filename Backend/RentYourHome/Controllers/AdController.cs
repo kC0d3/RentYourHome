@@ -32,8 +32,8 @@ public class AdController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error getting ad data.");
-            return NotFound("Error getting ad data.");
+            _logger.LogError(e, "Error create ad.");
+            return BadRequest("Error create ad.");
         }
     }
 
@@ -46,8 +46,8 @@ public class AdController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error getting ad data.");
-            return NotFound("Error getting ad data.");
+            _logger.LogError(e, "Error getting ads data.");
+            return NotFound("Error getting ads data.");
         }
     }
 
@@ -63,6 +63,36 @@ public class AdController : ControllerBase
         {
             _logger.LogError(e, "Error getting ad data.");
             return NotFound("Error getting ad data.");
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<AdDto>> UpdateAd(int id, AdUpdateDto adUpdateDto)
+    {
+        try
+        {
+            var ad = await _adRepository.GetAdById(id);
+            if (ad == null)
+            {
+                return NotFound();
+            }
+
+            ad.Address.ZipCode = adUpdateDto.Address.ZipCode;
+            ad.Address.City = adUpdateDto.Address.City;
+            ad.Address.Street = adUpdateDto.Address.Street;
+            ad.Address.HouseNumber = adUpdateDto.Address.HouseNumber;
+            ad.Rooms = adUpdateDto.Rooms;
+            ad.Size = adUpdateDto.Size;
+            ad.Price = adUpdateDto.Price;
+            ad.Description = adUpdateDto.Description;
+
+            _adRepository.UpdateAd(ad);
+            return Ok(_classConverterService.AdToAdDto(ad));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error update ad data.");
+            return BadRequest("Error update ad data.");
         }
     }
 
