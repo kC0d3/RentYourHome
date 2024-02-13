@@ -60,10 +60,64 @@ public class ImageController : ControllerBase
             var imageFileStream = System.IO.File.OpenRead(imagePath);
             return File(imageFileStream, "image/jpeg");
         }
-        else
+
+        return NotFound();
+    }
+
+    [HttpPut("{imageName}")]
+    public IActionResult UpdateImage(string imageName, IFormFile file)
+    {
+        if (file == null)
+        {
+            return BadRequest(new { Message = "Please select an image file to update." });
+        }
+
+        if (!IsImageFile(file))
+        {
+            return BadRequest(new { Message = "Invalid file format. Please upload image files only." });
+        }
+
+        string imagePath = Path.Combine(_uploadDirectory, imageName);
+
+        if (!System.IO.File.Exists(imagePath))
         {
             return NotFound();
         }
+
+        try
+        {
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            return Ok(new { Message = "Image updated successfully!" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { Message = "Error: " + ex.Message });
+        }
+    }
+
+    [HttpDelete("{imageName}")]
+    public IActionResult DeleteImage(string imageName)
+    {
+        string imagePath = Path.Combine(_uploadDirectory, imageName);
+
+        if (System.IO.File.Exists(imagePath))
+        {
+            try
+            {
+                System.IO.File.Delete(imagePath);
+                return Ok(new { Message = "Image deleted successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Error: " + ex.Message });
+            }
+        }
+
+        return NotFound();
     }
 
     private static bool IsImageFile(IFormFile file)
