@@ -5,7 +5,7 @@ using RentYourHome.Services.Authentication;
 namespace RentYourHome.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/auth")]
 
 public class AuthController : ControllerBase
 {
@@ -16,7 +16,7 @@ public class AuthController : ControllerBase
         _authenticationService = authenticationService;
     }
 
-    [HttpPost("/api/register")]
+    [HttpPost("register")]
     public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
     {
         if (!ModelState.IsValid)
@@ -35,7 +35,7 @@ public class AuthController : ControllerBase
         return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.Username));
     }
     
-    [HttpPost("/api/login")]
+    [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Authenticate([FromBody] AuthRequest request)
     {
         if (!ModelState.IsValid)
