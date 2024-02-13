@@ -46,7 +46,7 @@ function RegistrationForm({ setShowRegistration }) {
                 setRegistrationMessage('Registration successful! Please proceed to log in.');
                 setTimeout(() => {
                     handleClose();
-                }, 5000);
+                }, 3000);
 
             } else {
                 console.error('Registration failed.');
