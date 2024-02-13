@@ -1,5 +1,4 @@
 using RentYourHome.Models.Addresses;
-using RentYourHome.Models.Images;
 
 namespace RentYourHome.Models.Ads;
 
