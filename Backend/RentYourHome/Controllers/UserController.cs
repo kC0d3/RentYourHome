@@ -33,8 +33,8 @@ public class UserController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error getting user data.");
-            return NotFound("Error getting user data.");
+            _logger.LogError(e, "Error create user.");
+            return BadRequest("Error create user.");
         }
     }
 
@@ -53,22 +53,32 @@ public class UserController : ControllerBase
         }
     }
 
-    /*[HttpPut("{id}")]
-    public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UserDto userDto)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UserReqDto userReqDto)
     {
         try
         {
             var user = await _userRepository.GetUserById(id);
-            _userRepository.UpdateUser();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.UserName = userReqDto.UserName;
+            user.FirstName = userReqDto.FirstName;
+            user.LastName = userReqDto.LastName;
+            user.Email = userReqDto.Email;
+            
+            _userRepository.UpdateUser(user);
             return Ok(_classConverterService.UserToUserDto(user));
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error getting user data.");
-            return NotFound("Error getting user data.");
+            _logger.LogError(e, "Error update user data.");
+            return BadRequest("Error update user data.");
         }
-    }*/
-    
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult<UserDto>> DeleteUserById(int id)
     {
