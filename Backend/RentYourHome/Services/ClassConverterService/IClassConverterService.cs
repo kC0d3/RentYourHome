@@ -1,3 +1,4 @@
+using RentYourHome.Models.Addresses;
 using RentYourHome.Models.Ads;
 using RentYourHome.Models.Users;
 
