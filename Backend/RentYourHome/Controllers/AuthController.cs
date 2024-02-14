@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using RentYourHome.Contracts;
 using RentYourHome.Services.Authentication;
@@ -6,7 +8,6 @@ namespace RentYourHome.Controllers;
 
 [ApiController]
 [Route("api/auth")]
-
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
@@ -24,7 +25,8 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "User");
+        var result =
+            await _authenticationService.RegisterAsync(request.Email, request.Username, request.Password, "User");
 
         if (!result.Success)
         {
@@ -34,7 +36,7 @@ public class AuthController : ControllerBase
 
         return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.Username));
     }
-    
+
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Authenticate([FromBody] AuthRequest request)
     {
@@ -52,6 +54,20 @@ public class AuthController : ControllerBase
         }
 
         return Ok(new AuthResponse(result.Email, result.Username, result.Token));
+        Response.Cookies.Append("token", result.Token, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict
+        });
+        return Ok();
+    }
+
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return Ok("User logged out successfully.");
     }
 
     private void AddErrors(AuthResult result)

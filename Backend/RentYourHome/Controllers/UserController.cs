@@ -7,6 +7,7 @@ using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/users")]
 public class UserController : ControllerBase
@@ -68,7 +69,7 @@ public class UserController : ControllerBase
             user.FirstName = userReqDto.FirstName;
             user.LastName = userReqDto.LastName;
             user.Email = userReqDto.Email;
-            
+
             _userRepository.UpdateUser(user);
             return Ok(_classConverterService.UserToUserDto(user));
         }
