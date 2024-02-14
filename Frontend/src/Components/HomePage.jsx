@@ -91,36 +91,33 @@ function HomePage() {
     }
 
     return (
-        <>
-            <Navbar />
-            <div className="homepage-container">
-                <div className="filter-area">
-                    <FiltersBar 
-                        onFilterChange={handleFilterChange} 
-                        onSubmitFilters={handleApplyFilters} 
-                        onResetFilters={handleResetFilters}
-                    />
-                    <br></br>
-                </div>
-                <div className="content-area">
-                    {displayedAds.map((ad, index) => (
-                        <div key={index} className="card" onClick={() => navigate(`/ads/${ad.id}`)}>
-                            <div className="image-container">
-                                {ad.images.map((imageName, index) => (
-                                    <img key={index} src={`/api/images/${imageName}`} alt="Ad" />
-                                ))}
-                            </div>
-                            <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
-                            <div>Rooms: {ad.rooms}</div>
-                            <div>Size: {ad.size} sqm</div>
-                            <div>Price: {ad.price} HUF</div>
-                            <div>Description: {ad.description}</div>
-                            <br></br>
-                        </div>
-                    ))}
-                </div>
+        <div className="homepage-container">
+            <div className="filter-area">
+                <FiltersBar
+                    onFilterChange={handleFilterChange}
+                    onSubmitFilters={handleApplyFilters}
+                    onResetFilters={handleResetFilters}
+                />
+                <br></br>
             </div>
-        </>
+            <div className="content-area">
+                {displayedAds.map((ad, index) => (
+                    <div key={index} className="card" onClick={() => navigate(`/ads/${ad.id}`)}>
+                        <div className="image-container">
+                            {ad.images[0] && (
+                                <img src={`/api/images/${ad.images[0]}`} alt="Ad" />
+                            )}
+                        </div>
+                        <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
+                        <div>Rooms: {ad.rooms}</div>
+                        <div>Size: {ad.size} sqm</div>
+                        <div>Price: {ad.price} HUF</div>
+                        <div>Description: {ad.description}</div>
+                        <br></br>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
 
