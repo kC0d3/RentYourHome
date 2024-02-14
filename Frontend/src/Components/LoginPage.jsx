@@ -29,7 +29,6 @@ function LoginPage() {
             console.log(password);
 
             if (response.ok) {
-                const data = await response.json();
                 setIsLoggedIn(true);
                 console.log('User successfully logged in.');
                 setTimeout(() => {
