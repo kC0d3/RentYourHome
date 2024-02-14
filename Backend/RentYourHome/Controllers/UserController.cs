@@ -7,7 +7,6 @@ using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/users")]
 public class UserController : ControllerBase
@@ -23,7 +22,7 @@ public class UserController : ControllerBase
         _userRepository = userRepository;
         _classConverterService = classConverterService;
     }
-
+    
     [HttpPost]
     public ActionResult<UserReqDto> CreateUser([Required] UserReqDto user)
     {
@@ -39,6 +38,7 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "User")]
     [HttpGet("{username}")]
     public async Task<ActionResult<UserDto>> GetUserByUserName(string username)
     {
@@ -54,6 +54,7 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "User, Admin")]
     [HttpPut("{id}")]
     public async Task<ActionResult<UserDto>> UpdateUser(int id, [FromBody] UserReqDto userReqDto)
     {
@@ -80,8 +81,9 @@ public class UserController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "User, Admin")]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<UserDto>> DeleteUserById(int id)
+    public async Task<ActionResult<UserDto>> DeleteUser(int id)
     {
         try
         {
