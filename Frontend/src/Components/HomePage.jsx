@@ -5,7 +5,8 @@ import FiltersBar from "./FiltersBar.jsx";
 
 function HomePage() {
     const navigate = useNavigate();
-    const [adsData, setAdsData] = useState([]);
+    const [allAdsData, setAllAdsData] = useState([]); // before filtering
+    const [displayedAds, setDisplayedAds] = useState([]); // after filtering
     const [filters, setFilters] = useState({
         location: '',
         minPrice: '',
@@ -16,18 +17,16 @@ function HomePage() {
         maxRooms: '',
     });
 
-    const fetchAds = () => {
-        const queryParams = new URLSearchParams(filters).toString();
-
-        fetch(`/api/ads?${queryParams}`)
+    useEffect(() => {
+        fetch('/api/ads')
             .then(response => response.json())
             .then(data => {
-                setAdsData(data);
+                setAllAdsData(data);
+                setDisplayedAds(data);
                 console.log(data);
-            }
-            )
-            .catch(error => console.log("Error fetching ads:", error))
-    };
+            })
+            .catch(error => console.log("Error fetching ads:", error));
+    }, []);
 
     const handleFilterChange = (filterType, value) => {
         setFilters(prevFilters => ({
@@ -36,20 +35,29 @@ function HomePage() {
         console.log('Filter selected:', filterType, value)
     }
 
-    const handleSubmitFilters = () => {
-        fetchAds();
+    const handleApplyFilters = () => {
+        let filteredAds = allAdsData;
+
+        if (filters.location) {
+            filteredAds = filteredAds.filter(ad => 
+                ad.address.city.toLowerCase().includes(filters.location.toLowerCase()) ||
+                ad.address.street.toLowerCase().includes(filters.location.toLowerCase()) ||
+                ad.address.zipCode.toLowerCase().includes(filters.location));
+        }
+        setDisplayedAds(filteredAds);
     }
+    
 
     return (
         <>
             <Navbar />
             <div className="homepage-container">
                     <div className="filter-area">
-                        <FiltersBar onFilterChange={handleFilterChange} onSubmitFilters={handleSubmitFilters} />
+                        <FiltersBar onFilterChange={handleFilterChange} onSubmitFilters={handleApplyFilters} />
                         <br></br>
                             </div>
                 <div className="content-area">
-                            {adsData.map((ad, index) => (
+                            {displayedAds.map((ad, index) => (
                                 <div key={index} className="card" onClick={() => navigate(`/ads/${ad.id}`)}>
                                     <div className="image-container">
                                         {ad.images.map((imageName, index) => (
