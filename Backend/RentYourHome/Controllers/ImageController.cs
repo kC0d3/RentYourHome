@@ -1,16 +1,16 @@
-using System.IO.Compression;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RentYourHome.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/images")]
 public class ImageController : ControllerBase
 {
     private readonly string _uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "AdsImages");
 
+    
+    [Authorize(Roles = "User")]
     [HttpPost]
     public IActionResult UploadImages(IFormFileCollection files)
     {
@@ -51,7 +51,7 @@ public class ImageController : ControllerBase
             return BadRequest(new { Message = "Please select at least one image file to upload." });
         }
     }
-
+    
     [HttpGet("{imageName}")]
     public IActionResult GetImage(string imageName)
     {
@@ -65,7 +65,8 @@ public class ImageController : ControllerBase
 
         return NotFound();
     }
-
+    
+    [Authorize(Roles = "User, Admin")]
     [HttpPut("{imageName}")]
     public IActionResult UpdateImage(string imageName, IFormFile file)
     {
@@ -101,6 +102,7 @@ public class ImageController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "User, Admin")]
     [HttpDelete("{imageName}")]
     public IActionResult DeleteImage(string imageName)
     {
