@@ -36,7 +36,7 @@ public class AdController : ControllerBase
             return NotFound("Error getting ads data.");
         }
     }
-    
+
     [HttpGet("{id}")]
     public async Task<ActionResult<AdDto>> GetAdById(int id)
     {
@@ -51,7 +51,7 @@ public class AdController : ControllerBase
             return NotFound("Error getting ad data.");
         }
     }
-    
+
     [Authorize(Roles = "User")]
     [HttpPost]
     public ActionResult<AdReqDto> CreateAd([Required] AdReqDto ad)
@@ -113,6 +113,30 @@ public class AdController : ControllerBase
         {
             _logger.LogError(e, "Error getting ad data.");
             return NotFound("Error getting ad data.");
+        }
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpPut("approve/{id}")]
+    public async Task<IActionResult> ApproveAd(int id)
+    {
+        try
+        {
+            var ad = await _adRepository.GetAdById(id);
+            if (ad == null)
+            {
+                return NotFound();
+            }
+
+            ad.Approved = true;
+
+            _adRepository.UpdateAd(ad);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error update ad data.");
+            return BadRequest("Error update ad data.");
         }
     }
 }
