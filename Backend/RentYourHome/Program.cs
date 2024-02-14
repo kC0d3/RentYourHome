@@ -19,16 +19,16 @@ AddIdentity();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 AddRoles();
 AddAdmin();
+
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
@@ -49,6 +49,7 @@ void AddAuthentication()
 {
     builder.Services
         .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddCookie(options => { options.Cookie.Name = "token"; })
         .AddJwtBearer(options =>
         {
             options.TokenValidationParameters = new TokenValidationParameters()
@@ -61,8 +62,18 @@ void AddAuthentication()
                 ValidIssuer = builder.Configuration["JwtSettings:ValidIssuer"],
                 ValidAudience = builder.Configuration["JwtSettings:ValidAudience"],
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:IssuerSigningKey"]) //<- ezt hol kéne pontosan tárolni?
+                    Encoding.UTF8.GetBytes(
+                        builder.Configuration["JwtSettings:IssuerSigningKey"]) //<- ezt hol kéne pontosan tárolni?
                 ),
+            };
+
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    context.Token = context.Request.Cookies["token"];
+                    return Task.CompletedTask;
+                }
             };
         });
 }
@@ -110,11 +121,11 @@ void ConfigureSwagger()
                 {
                     Reference = new OpenApiReference
                     {
-                        Type=ReferenceType.SecurityScheme,
-                        Id="Bearer"
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
                     }
                 },
-                new string[]{}
+                new string[] { }
             }
         });
     });
@@ -122,7 +133,9 @@ void ConfigureSwagger()
 
 void AddRoles()
 {
-    using var scope = app.Services.CreateScope(); // RoleManager is a scoped service, therefore we need a scope instance to access it
+    using var
+        scope = app.Services
+            .CreateScope(); // RoleManager is a scoped service, therefore we need a scope instance to access it
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     var tAdmin = CreateAdminRole(roleManager);
@@ -134,12 +147,14 @@ void AddRoles()
 
 async Task CreateAdminRole(RoleManager<IdentityRole> roleManager)
 {
-    await roleManager.CreateAsync(new IdentityRole("Admin")); //The role string should better be stored as a constant or a value in appsettings
+    await roleManager.CreateAsync(
+        new IdentityRole("Admin")); //The role string should better be stored as a constant or a value in appsettings
 }
 
 async Task CreateUserRole(RoleManager<IdentityRole> roleManager)
 {
-    await roleManager.CreateAsync(new IdentityRole("User")); //The role string should better be stored as a constant or a value in appsettings
+    await roleManager.CreateAsync(
+        new IdentityRole("User")); //The role string should better be stored as a constant or a value in appsettings
 }
 
 void AddAdmin()

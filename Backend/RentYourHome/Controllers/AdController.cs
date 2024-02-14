@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentYourHome.Models.Ads;
 using RentYourHome.Repositories.AdRepository;
@@ -6,6 +7,7 @@ using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/ads")]
 public class AdController : ControllerBase
