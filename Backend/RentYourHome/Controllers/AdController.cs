@@ -7,7 +7,6 @@ using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/ads")]
 public class AdController : ControllerBase
@@ -24,6 +23,36 @@ public class AdController : ControllerBase
         _classConverterService = classConverterService;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<ICollection<AdDto>>> GetAllAds()
+    {
+        try
+        {
+            return Ok(await _adRepository.GetAllAds());
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting ads data.");
+            return NotFound("Error getting ads data.");
+        }
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<AdDto>> GetAdById(int id)
+    {
+        try
+        {
+            var ad = await _adRepository.GetAdById(id);
+            return Ok(_classConverterService.AdToAdDto(ad));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error getting ad data.");
+            return NotFound("Error getting ad data.");
+        }
+    }
+    
+    [Authorize(Roles = "User")]
     [HttpPost]
     public ActionResult<AdReqDto> CreateAd([Required] AdReqDto ad)
     {
@@ -39,35 +68,7 @@ public class AdController : ControllerBase
         }
     }
 
-    [HttpGet]
-    public async Task<ActionResult<ICollection<AdDto>>> GetAllAds()
-    {
-        try
-        {
-            return Ok(await _adRepository.GetAllAds());
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error getting ads data.");
-            return NotFound("Error getting ads data.");
-        }
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<AdDto>> GetAdById(int id)
-    {
-        try
-        {
-            var ad = await _adRepository.GetAdById(id);
-            return Ok(_classConverterService.AdToAdDto(ad));
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error getting ad data.");
-            return NotFound("Error getting ad data.");
-        }
-    }
-
+    [Authorize(Roles = "User, Admin")]
     [HttpPut("{id}")]
     public async Task<ActionResult<AdDto>> UpdateAd(int id, AdUpdateDto adUpdateDto)
     {
@@ -98,8 +99,9 @@ public class AdController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "User, Admin")]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<AdDto>> DeleteAdById(int id)
+    public async Task<ActionResult<AdDto>> DeleteAd(int id)
     {
         try
         {
