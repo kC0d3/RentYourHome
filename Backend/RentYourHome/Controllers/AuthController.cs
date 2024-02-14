@@ -38,7 +38,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Authenticate([FromBody] AuthRequest request)
+    public async Task<ActionResult<string>> Authenticate([FromBody] AuthRequest request)
     {
         if (!ModelState.IsValid)
         {
@@ -59,7 +59,7 @@ public class AuthController : ControllerBase
             Secure = true,
             SameSite = SameSiteMode.Strict
         });
-        return Ok();
+        return Ok(result.Role);
     }
 
     [HttpPost("logout")]
