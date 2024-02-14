@@ -59,7 +59,7 @@ public class AuthController : ControllerBase
             Secure = true,
             SameSite = SameSiteMode.Strict
         });
-        return Ok();
+        return Ok(new AuthResponse(result.Email, result.Username, result.Token));
     }
 
     [HttpPost("logout")]
