@@ -4,7 +4,8 @@ public record AuthResult(
     bool Success,
     string Email,
     string Username,
-    string Token)
+    string Token,
+    string Role)
 {
     public readonly Dictionary<string, string> ErrorMessages = new();
 }
