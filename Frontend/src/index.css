@@ -273,6 +273,8 @@ button:focus-visible {
 .profilebar {
   display: flex;
   flex-direction: row;
+  justify-content: center; 
+  text-align: center; 
 }
 
 .profilebar p {
@@ -282,9 +284,9 @@ button:focus-visible {
 .profilebar p span {
   font-weight: bold; 
   margin-right: 5px; 
-  background-color: #333;
+  /*background-color: #333;*/
   border-radius: 8px;
-  color: #fff;
+  color: #000000;
 }
 
 /* Image Gallery */
