@@ -14,8 +14,8 @@ function App() {
       <Navbar {...{ loggedUser, setLoggedUser }} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage {...{ setLoggedUser }}/>} />
-        <Route path="/profile" element={<ProfilePage {...{ setLoggedUser }} />} />
+        <Route path="/login" element={<LoginPage {...{ loggedUser, setLoggedUser }}/>} />
+        <Route path="/profile" element={<ProfilePage {...{ loggedUser, setLoggedUser }} />} />
         <Route path="/ads/:id" element={<AdDetails {...{ setLoggedUser }} />} />
         {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>
