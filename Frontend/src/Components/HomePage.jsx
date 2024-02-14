@@ -87,6 +87,7 @@ function HomePage() {
             minRooms: '',
             maxRooms: '',
         });
+        setDisplayedAds(allAdsData);
     }
 
     return (
