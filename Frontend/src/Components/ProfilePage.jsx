@@ -1,8 +1,13 @@
 import React from "react";
+import ProfileInfo from "./ProfileInfo";
 
-function ProfilePage() {
+function ProfilePage({loggedUser}) {
+console.log(loggedUser.firstName)
+
     return (
-        1
+        <>
+        <ProfileInfo loggedUser={loggedUser}/>
+        </>
     )
 }
 

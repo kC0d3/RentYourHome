@@ -262,3 +262,19 @@ button:focus-visible {
   color: white;
   /* TODO: add styles */
 }
+
+/*profilbar*/
+
+.profilebar {
+  display: flex;
+  flex-direction: row;
+}
+
+.profilebar p {
+  margin-right: 20px; 
+}
+
+.profilebar p span {
+  font-weight: bold; 
+  margin-right: 5px; 
+}
