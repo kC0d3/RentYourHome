@@ -44,6 +44,36 @@ function HomePage() {
                 ad.address.street.toLowerCase().includes(filters.location.toLowerCase()) ||
                 ad.address.zipCode.toLowerCase().includes(filters.location));
         }
+
+        if (filters.minPrice) {
+            filteredAds = filteredAds.filter(ad => 
+                ad.price >= filters.minPrice);
+        }
+
+        if (filters.maxPrice) {
+            filteredAds = filteredAds.filter(ad => 
+                ad.price <= filters.maxPrice);
+        }
+
+        if (filters.minSize) {
+            filteredAds = filteredAds.filter(ad => 
+                ad.size >= filters.minSize);
+        }
+
+        if (filters.maxSize) {
+            filteredAds = filteredAds.filter(ad => 
+                ad.size <= filters.maxSize);
+        }
+
+        if (filters.minRooms) {
+            filteredAds = filteredAds.filter(ad => 
+                ad.rooms >= filters.minRooms);
+        }
+
+        if (filters.maxRooms) {
+            filteredAds = filteredAds.filter(ad => 
+                ad.rooms <= filters.maxRooms);
+        }
         setDisplayedAds(filteredAds);
     }
     
