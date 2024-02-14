@@ -264,7 +264,7 @@ button:focus-visible {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 1rem;
-  color: white;
+  color: white
   /* TODO: add styles */
 }
 
@@ -329,4 +329,39 @@ button:focus-visible {
     margin-left: 0;
     margin-bottom: 1rem;
   }
+}
+/*profil page*/
+
+.profil-page-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.published-ads-container {
+  margin-left: 5%; 
+  width: 40%;
+}
+
+.published-ads {
+  
+  display: grid;
+  grid-template-columns: 1fr; 
+  gap: 20px; 
+}
+
+.published-ads-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center; 
+}
+
+.applied-ads-container {
+  margin-right: 5%; 
+  width: 40%;
+}
+
+.applied-ads-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center; 
 }
