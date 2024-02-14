@@ -1,8 +1,10 @@
 using System.IO.Compression;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RentYourHome.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/images")]
 public class ImageController : ControllerBase
