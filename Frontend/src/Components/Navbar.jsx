@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 
-function Navbar({ loggedUser, onLogout }) {
+function Navbar({ loggedUser, setLoggedUser }) {
 
     const handleLogout = () => {
         fetch('/api/auth/logout', { // call logout endpoint
-          method: 'POST'
+            method: 'POST'
         })
-          .then(() => {
-            setLoggedUser(undefined); // reset user state
-          })
-          .catch(err => console.error('Logout error', err));
-      };
+            .then(() => {
+                setLoggedUser(undefined); // reset user state
+            })
+            .catch(err => console.error('Logout error', err));
+    };
 
     return (
         <div className="navbar">
@@ -25,8 +25,8 @@ function Navbar({ loggedUser, onLogout }) {
                     <Link to="/profile">
                         <button>Profile</button>
                     </Link>
-                    <Link to="/login">
-                        <button onClick={onLogout}>Logout</button>
+                    <Link to="/">
+                        <button onClick={handleLogout}>Logout</button>
                     </Link>
                 </>
             ) : (
