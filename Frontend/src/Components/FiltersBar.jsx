@@ -1,6 +1,6 @@
 import React from "react";
 
-const FiltersBar = ({ onFilterChange, onSubmitFilters }) => {
+const FiltersBar = ({ onFilterChange, onSubmitFilters, onResetFilters }) => {
     return (
         <div className="filters">
             <div className="filter-input-group">
@@ -55,6 +55,7 @@ const FiltersBar = ({ onFilterChange, onSubmitFilters }) => {
             </div>
             <div>
                 <button onClick={onSubmitFilters}>Apply Filters</button>
+                <button onClick={onResetFilters}>Clear Filters</button>
             </div>
         </div>
     );
