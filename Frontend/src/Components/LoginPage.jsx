@@ -29,8 +29,10 @@ function LoginPage({loggedUser, setLoggedUser}) {
 
             if (response.ok) {
                 const response = await fetch(`/api/users/${username}`);
-                const userData = response.json();
-                setLoggedUser(userData);
+                const userData = await response.json();
+                await setLoggedUser(userData);
+                console.log(loggedUser)
+                console.log(userData)
                 console.log('User successfully logged in.');
                 setTimeout(() => {
                     navigate('/');
