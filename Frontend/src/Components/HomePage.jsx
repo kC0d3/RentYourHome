@@ -7,6 +7,7 @@ function HomePage() {
     const navigate = useNavigate();
     const [allAdsData, setAllAdsData] = useState([]); // before filtering
     const [displayedAds, setDisplayedAds] = useState([]); // after filtering
+    const [approvedAds, setApprovedAds] = useState([]);
     const [filters, setFilters] = useState({
         location: '',
         minPrice: '',
@@ -22,7 +23,10 @@ function HomePage() {
             .then(response => response.json())
             .then(data => {
                 setAllAdsData(data);
-                setDisplayedAds(data);
+                let approvedAds = data.filter(ad=> ad.approved == true)
+                console.log(approvedAds);
+                setDisplayedAds(approvedAds);
+                setApprovedAds(approvedAds)
                 console.log(data);
             })
             .catch(error => console.log("Error fetching ads:", error));
@@ -36,7 +40,7 @@ function HomePage() {
     }
 
     const handleApplyFilters = () => {
-        let filteredAds = allAdsData;
+        let filteredAds = approvedAds;
 
         if (filters.location) {
             filteredAds = filteredAds.filter(ad =>
@@ -87,7 +91,7 @@ function HomePage() {
             minRooms: '',
             maxRooms: '',
         });
-        setDisplayedAds(allAdsData);
+        setDisplayedAds(approvedAds);
     }
 
     return (
@@ -97,6 +101,7 @@ function HomePage() {
                     onFilterChange={handleFilterChange}
                     onSubmitFilters={handleApplyFilters}
                     onResetFilters={handleResetFilters}
+                    filters={filters}
                 />
                 <br></br>
             </div>
