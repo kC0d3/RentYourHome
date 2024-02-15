@@ -56,7 +56,7 @@ export default function CreateAd({ loggedUser }) {
     return (
         <>
             <form className='create-ad' onSubmit={handleSubmit}>
-                <label>Address</label>
+                <h3>Ad Details</h3>
                 <label>Zipcode</label>
                 <input type='text' onChange={e => setAd({ ...ad, address: { ...ad.address, zipCode: e.target.value } })} value={ad.address.zipCode} required />
                 <label>City</label>
