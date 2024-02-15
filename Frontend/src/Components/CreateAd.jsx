@@ -56,26 +56,29 @@ export default function CreateAd({ loggedUser }) {
     return (
         <>
             <form className='create-ad' onSubmit={handleSubmit}>
-                <label>Addreess</label>
+                <label>Address</label>
                 <label>Zipcode</label>
                 <input type='text' onChange={e => setAd({ ...ad, address: { ...ad.address, zipCode: e.target.value } })} value={ad.address.zipCode} required />
                 <label>City</label>
                 <input type='text' onChange={e => setAd({ ...ad, address: { ...ad.address, city: e.target.value } })} value={ad.address.city} required />
                 <label>Street</label>
                 <input type='text' onChange={e => setAd({ ...ad, address: { ...ad.address, street: e.target.value } })} value={ad.address.street} required />
-                <label>Housenumber</label>
+                <label>House number</label>
                 <input type='text' onChange={e => setAd({ ...ad, address: { ...ad.address, houseNumber: e.target.value } })} value={ad.address.houseNumber} required />
                 <label>Rooms</label>
-                <input type='text' inputMode='numeric' onChange={e => { !isNaN(e.target.value) && setAd({ ...ad, rooms: parseInt(e.target.value) }) }} value={ad.rooms} required />
+                <input type='number' className='no-spinners' onChange={e => setAd({ ...ad, rooms: parseInt(e.target.value) })} value={ad.rooms} required />
                 <label>Size</label>
-                <input type='text' inputMode='numeric' onChange={e => { !isNaN(e.target.value) && setAd({ ...ad, size: parseInt(e.target.value) }) }} value={ad.size} required />
+                <input type='number' className='no-spinners' onChange={e => setAd({ ...ad, size: parseInt(e.target.value) })} value={ad.size} required />
                 <label>Price</label>
-                <input type='text' inputMode='numeric' onChange={e => { !isNaN(e.target.value) && setAd({ ...ad, price: parseInt(e.target.value) }) }} value={ad.price} required />
+                <input type='number' className='no-spinners' onChange={e => setAd({ ...ad, price: parseInt(e.target.value) })} value={ad.price} required />
                 <label>Description</label>
                 <input type='text' onChange={e => setAd({ ...ad, description: e.target.value })} value={ad.description} required />
-                <label>Pictures</label>
+                <label>Add Pictures</label>
                 <input type='file' id='files' multiple onChange={e => setImages(Array.from(e.target.files))} required />
-                <button type='submit'>Post Ad</button>
+                <div className="button-group">
+                    <button type='submit'>Post Ad</button>
+                    <button type='button' onClick={() => navigate(-1)}>Cancel</button>
+                </div>
             </form>
         </>
     );
