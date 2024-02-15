@@ -3,11 +3,12 @@ import ProfileInfo from "./ProfileInfo";
 import ProfileAds from "./ProfilAds";
 import { useState, useEffect } from "react";
 
-function ProfilePage({loggedUser}) {
+function ProfilePage({loggedUser, setLoggedUser}) {
 console.log(loggedUser)
 
 const [unApprovedAds, setUnApprovedAds] = useState([]);
 const [approvedAds, setApprovedAds] = useState([]);
+const [applied, setApplied] = useState([])
 
 useEffect(() => {
     fetch('/api/ads')
@@ -27,7 +28,7 @@ useEffect(() => {
             <div className="profil-page-container">
             <div className="published-ads-container">
                 <h2 className="published-ads-title">Approved Ads</h2>
-                    <ProfileAds className="published-ads" ads={approvedAds}/>
+                    <ProfileAds className="published-ads" ads={approvedAds} isAdmin={loggedUser.username === "Admin"} setApprovedAds={setApprovedAds} setUnApprovedAds={setUnApprovedAds}/>
             </div>
             <div className="applied-ads-container">
                 <h2 className="applied-ads-title">UnApproved Ads</h2>
@@ -41,11 +42,11 @@ useEffect(() => {
         <div className="profil-page-container">
             <div className="published-ads-container">
                 <h2 className="published-ads-title">Published Ads</h2>
-                    <ProfileAds className="published-ads" ads={loggedUser.publishedAds}/>
+                    <ProfileAds className="published-ads" ads={loggedUser.publishedAds} setApprovedAds={setApprovedAds} setUnApprovedAds={setUnApprovedAds} username={loggedUser.username} setLoggedUser={setLoggedUser}/>
             </div>
             <div className="applied-ads-container">
                 <h2 className="applied-ads-title">Applied Ads</h2>
-                    <ProfileAds className="published-ads" ads={loggedUser.publishedAds}/>
+                    <ProfileAds className="published-ads" ads={applied} setApprovedAds={setApprovedAds} setUnApprovedAds={setUnApprovedAds} username={loggedUser.username} setLoggedUser={setLoggedUser}/>
             </div>
         </div>
         </>)
