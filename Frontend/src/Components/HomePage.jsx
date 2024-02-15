@@ -97,6 +97,7 @@ function HomePage() {
                     onFilterChange={handleFilterChange}
                     onSubmitFilters={handleApplyFilters}
                     onResetFilters={handleResetFilters}
+                    filters={filters}
                 />
                 <br></br>
             </div>
