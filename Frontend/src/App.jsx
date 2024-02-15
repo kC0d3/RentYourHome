@@ -18,7 +18,7 @@ function App() {
         <Route path="/login" element={<LoginPage {...{ loggedUser, setLoggedUser }} />} />
         <Route path="/profile" element={<ProfilePage {...{ loggedUser, setLoggedUser }} />} />
         <Route path="/ads/:id" element={<AdDetails {...{ setLoggedUser }} />} />
-        <Route path="/ads/create" element={<CreateAd {...{ loggedUser }} />} />
+        <Route path="/ads/create" element={<CreateAd {...{ loggedUser, setLoggedUser }} />} />
         {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>
     </Router>
