@@ -14,10 +14,21 @@ function Navbar({ loggedUser, setLoggedUser }) {
 
     return (
         <div className="navbar">
-            <Link to="/">
-                <button>Home</button>
-            </Link>
-            {loggedUser ? (
+              <Link to="/">
+        <button>Home</button>
+    </Link>
+    {loggedUser ? (
+        <>
+            {loggedUser.username === "Admin" ? (
+                <>
+                    <Link to="/profile">
+                        <button>Profile</button>
+                    </Link>
+                    <Link to="/">
+                        <button onClick={handleLogout}>Logout</button>
+                    </Link>
+                </>
+            ) : (
                 <>
                     <Link to="/ads/create">
                         <button>Post Ad</button>
@@ -29,14 +40,13 @@ function Navbar({ loggedUser, setLoggedUser }) {
                         <button onClick={handleLogout}>Logout</button>
                     </Link>
                 </>
-            ) : (
-                <>
-                    <Link to="/login">
-                        <button>Login/Register</button>
-                    </Link>
-                </>
             )}
-
+        </>
+    ) : (
+        <Link to="/login">
+            <button>Login/Register</button>
+        </Link>
+    )}
         </div>
     );
 }
