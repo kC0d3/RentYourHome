@@ -275,6 +275,7 @@ button:focus-visible {
   flex-direction: row;
   justify-content: center; 
   text-align: center; 
+  font-size: 20px;
 }
 
 .profilebar p {
