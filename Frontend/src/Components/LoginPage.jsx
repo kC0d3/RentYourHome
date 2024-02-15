@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import RegistrationForm from "./RegistrationForm";
 
-function LoginPage({loggedUser, setLoggedUser}) {
+function LoginPage({ loggedUser, setLoggedUser }) {
     const navigate = useNavigate();
     const [showRegistration, setShowRegistration] = useState(false);
     const [username, setUsername] = useState("");
@@ -33,7 +33,7 @@ function LoginPage({loggedUser, setLoggedUser}) {
                 await setLoggedUser(userData);
                 console.log('User successfully logged in.');
                 setTimeout(() => {
-                    navigate('/');
+                navigate('/');
                 }, 3000);
             } else {
                 setLoginError('Invalid username or password. Please try agagin.');

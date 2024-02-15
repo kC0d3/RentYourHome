@@ -19,7 +19,7 @@ function Navbar({ loggedUser, setLoggedUser }) {
             </Link>
             {loggedUser ? (
                 <>
-                    <Link to="/profile">
+                    <Link to="/ads/create">
                         <button>Post Ad</button>
                     </Link>
                     <Link to="/profile">
