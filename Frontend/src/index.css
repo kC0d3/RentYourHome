@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #515151;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -268,7 +268,7 @@ button:focus-visible {
   /* TODO: add styles */
 }
 
-/*profilbar*/
+/* Profile Bar */
 
 .profilebar {
   display: flex;
@@ -331,7 +331,7 @@ button:focus-visible {
     margin-bottom: 1rem;
   }
 }
-/*profil page*/
+/* Profile Page */
 
 .profil-page-container{
   display: flex;

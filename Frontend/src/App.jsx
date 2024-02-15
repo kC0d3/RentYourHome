@@ -5,6 +5,7 @@ import LoginPage from './Components/LoginPage.jsx';
 import AdDetails from './Components/AdDetails.jsx';
 import Navbar from './Components/Navbar.jsx';
 import ProfilePage from './Components/ProfilePage.jsx';
+import CreateAd from './Components/CreateAd.jsx';
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(undefined);
@@ -14,9 +15,10 @@ function App() {
       <Navbar {...{ loggedUser, setLoggedUser }} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage {...{ loggedUser, setLoggedUser }}/>} />
+        <Route path="/login" element={<LoginPage {...{ loggedUser, setLoggedUser }} />} />
         <Route path="/profile" element={<ProfilePage {...{ loggedUser, setLoggedUser }} />} />
         <Route path="/ads/:id" element={<AdDetails {...{ setLoggedUser }} />} />
+        <Route path="/ads/create" element={<CreateAd {...{ loggedUser }} />} />
         {/* <Route path="*" element={<ErrorPage />} /> */}
       </Routes>
     </Router>
