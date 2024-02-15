@@ -9,7 +9,7 @@ public class ImageController : ControllerBase
 {
     private readonly string _uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "AdsImages");
 
-    
+
     [Authorize(Roles = "User")]
     [HttpPost]
     public IActionResult UploadImages(IFormFileCollection files)
@@ -32,7 +32,6 @@ public class ImageController : ControllerBase
 
                     string fileName = Path.GetFileName(file.FileName);
                     string filePath = Path.Combine(_uploadDirectory, fileName);
-
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         file.CopyTo(stream);
@@ -46,12 +45,10 @@ public class ImageController : ControllerBase
                 return BadRequest(new { Message = "Error: " + ex.Message });
             }
         }
-        else
-        {
-            return BadRequest(new { Message = "Please select at least one image file to upload." });
-        }
+
+        return BadRequest(new { Message = "Please select at least one image file to upload." });
     }
-    
+
     [HttpGet("{imageName}")]
     public IActionResult GetImage(string imageName)
     {
@@ -65,7 +62,7 @@ public class ImageController : ControllerBase
 
         return NotFound();
     }
-    
+
     [Authorize(Roles = "User, Admin")]
     [HttpPut("{imageName}")]
     public IActionResult UpdateImage(string imageName, IFormFile file)
