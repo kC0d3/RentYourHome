@@ -24,10 +24,13 @@ function LoginPage({loggedUser, setLoggedUser}) {
                     password: password,
                 }),
             });
+            
             console.log(username);
             console.log(password);
+            let a = await response.text();
+            console.log(a)
 
-            if (response.ok) {
+            if (response.ok && a !== "Admin") {
                 const response = await fetch(`/api/users/${username}`);
                 const userData = await response.json();
                 await setLoggedUser(userData);
@@ -35,7 +38,16 @@ function LoginPage({loggedUser, setLoggedUser}) {
                 setTimeout(() => {
                     navigate('/');
                 }, 3000);
-            } else {
+            } else if(response.ok && a == "Admin"){
+                const admin = {username: "Admin",
+                                firstName: "Admin",
+                                lastName: "Admin",
+                                email: "..."}    
+                await setLoggedUser(admin);
+                setTimeout(() => {
+                    navigate('/');
+                }, 1000);            
+            }else{
                 setLoginError('Invalid username or password. Please try agagin.');
                 console.error('Invalid username or password during login.');
             }
