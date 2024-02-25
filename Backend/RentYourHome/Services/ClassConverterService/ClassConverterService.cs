@@ -1,3 +1,4 @@
+using RentYourHome.Contracts;
 using RentYourHome.Models.Addresses;
 using RentYourHome.Models.Ads;
 using RentYourHome.Models.Images;
@@ -11,6 +12,17 @@ public class ClassConverterService : IClassConverterService
     public User UserReqDtoToUser(UserReqDto user)
     {
         return new User
+        {
+            Username = user.Username,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+        };
+    }
+    
+    public UserReqDto RegistrationRequestToToUser(RegistrationRequest user)
+    {
+        return new UserReqDto
         {
             Username = user.Username,
             FirstName = user.FirstName,
@@ -112,4 +124,5 @@ public class ClassConverterService : IClassConverterService
             HouseNumber = address.HouseNumber,
         };
     }
+    
 }

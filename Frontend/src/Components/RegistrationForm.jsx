@@ -26,23 +26,13 @@ function RegistrationForm({ setShowRegistration }) {
                     email,
                     username,
                     password,
+                    firstName,
+                    lastName,
                 }),
             });
 
-            if (response.status !== 400) {
-                console.log('User successfully registered.');
-                await fetch('/api/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username,
-                        firstName,
-                        lastName,
-                        email,
-                    }),
-                });
+            if (response.ok) {
+                console.log('User successfully registered.');                
                 setRegistrationMessage('Registration successful! Please proceed to log in.');
                 setTimeout(() => {
                     handleClose();

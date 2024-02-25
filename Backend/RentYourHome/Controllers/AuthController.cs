@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using RentYourHome.Contracts;
+using RentYourHome.Models.Users;
+using RentYourHome.Repositories.UserRepository;
 using RentYourHome.Services.Authentication;
+using RentYourHome.Services.ClassConverterService;
 
 namespace RentYourHome.Controllers;
 
@@ -11,10 +14,15 @@ namespace RentYourHome.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authenticationService;
+    private readonly IUserRepository _userRepository;
+    private readonly IClassConverterService _classConverterService;
 
-    public AuthController(IAuthService authenticationService)
+    public AuthController(IAuthService authenticationService,IUserRepository userRepository,
+        IClassConverterService classConverterService)
     {
         _authenticationService = authenticationService;
+        _userRepository = userRepository;
+        _classConverterService = classConverterService;
     }
 
     [HttpPost("register")]
@@ -33,8 +41,16 @@ public class AuthController : ControllerBase
             AddErrors(result);
             return BadRequest(ModelState);
         }
-
-        return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.Username));
+        
+        try
+        {
+            _userRepository.AddUserToDb(_classConverterService.RegistrationRequestToToUser(request));
+            return CreatedAtAction(nameof(Register), new RegistrationResponse(result.Email, result.Username));
+        }
+        catch (Exception e)
+        {
+            return BadRequest("Error create user.");
+        }
     }
 
     [HttpPost("login")]

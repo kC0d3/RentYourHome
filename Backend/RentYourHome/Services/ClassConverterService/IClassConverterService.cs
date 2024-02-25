@@ -1,3 +1,4 @@
+using RentYourHome.Contracts;
 using RentYourHome.Models.Addresses;
 using RentYourHome.Models.Ads;
 using RentYourHome.Models.Users;
@@ -11,4 +12,6 @@ public interface IClassConverterService
     ICollection<AdDto> AdsToAdDtos(IEnumerable<Ad> ads);
     UserDto UserToUserDto(User user);
     AdDto AdToAdDto(Ad ad);
+
+    UserReqDto RegistrationRequestToToUser(RegistrationRequest request);
 }
