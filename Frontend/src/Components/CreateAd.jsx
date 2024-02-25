@@ -46,10 +46,6 @@ export default function CreateAd({ loggedUser, setLoggedUser }) {
                 body: generateFormData()
             });
 
-            const userResponse = await fetch(`/api/users/${loggedUser.username}`);
-                    const userData = await userResponse.json();
-                    await setLoggedUser(userData);
-
             navigate('/profile');
         }
         catch (error) {
