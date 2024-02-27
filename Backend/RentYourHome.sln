@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentYourHome", "RentYourHome\RentYourHome.csproj", "{97E1B6D6-D2B9-4ECF-BCCB-B568DB8B10E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentYourHomeIntegrationTests", "RentYourHomeIntegrationTests\RentYourHomeIntegrationTests.csproj", "{5D86B2DA-C083-43AA-847A-B39F1A632C16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{97E1B6D6-D2B9-4ECF-BCCB-B568DB8B10E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97E1B6D6-D2B9-4ECF-BCCB-B568DB8B10E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97E1B6D6-D2B9-4ECF-BCCB-B568DB8B10E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D86B2DA-C083-43AA-847A-B39F1A632C16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D86B2DA-C083-43AA-847A-B39F1A632C16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D86B2DA-C083-43AA-847A-B39F1A632C16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D86B2DA-C083-43AA-847A-B39F1A632C16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
