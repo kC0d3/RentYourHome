@@ -37,7 +37,7 @@ public class RentYourHomeIntegrationTests
     {
         //Arrange
         var application = new RentYourHomeWebApplicationFactory();
-        var userReg = new RegistrationRequest("user1@user1.com", "user1", "123456");
+        var userReg = new RegistrationRequest("user1@user1.com", "user1", "firstname", "lastname", "123456");
         var user = new AuthRequest("user1", "123456");
         var client = application.CreateClient();
 

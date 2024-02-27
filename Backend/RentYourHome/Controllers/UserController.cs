@@ -22,21 +22,6 @@ public class UserController : ControllerBase
         _userRepository = userRepository;
         _classConverterService = classConverterService;
     }
-    
-    [HttpPost]
-    public ActionResult<UserReqDto> CreateUser([Required] UserReqDto user)
-    {
-        try
-        {
-            _userRepository.AddUserToDb(user);
-            return Ok(user);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error create user.");
-            return BadRequest("Error create user.");
-        }
-    }
 
     [Authorize(Roles = "User")]
     [HttpGet("{username}")]
