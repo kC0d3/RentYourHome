@@ -1,4 +1,5 @@
 using System.Text;
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,9 @@ ConfigureSwagger();
 AddDbContext();
 AddAuthentication();
 AddIdentity();
+
+var dotenv = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".env");
+Env.Load(dotenv);
 
 var app = builder.Build();
 
@@ -67,7 +71,7 @@ void AddAuthentication()
                 ValidAudience = builder.Configuration["JwtSettings:ValidAudience"],
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(
-                        builder.Configuration["JwtSettings:IssuerSigningKey"]) //<- ezt hol kéne pontosan tárolni?
+                        Environment.GetEnvironmentVariable("ISSUERSIGNINGKEY"))
                 ),
             };
 

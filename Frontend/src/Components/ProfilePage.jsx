@@ -11,16 +11,26 @@ const [approvedAds, setApprovedAds] = useState([]);
 const [applied, setApplied] = useState([])
 
 useEffect(() => {
-    fetch('/api/ads')
-        .then(response => response.json())
-        .then(data => {
-            let unApprovedAds = data.filter(ad=> ad.approved == false)
-            let approvedAds = data.filter(ad=> ad.approved == true)            
-            setUnApprovedAds(unApprovedAds)
-            setApprovedAds(approvedAds)            
-        })
-        .catch(error => console.log("Error fetching ads:", error));
+    fetchData();
 }, []);
+
+const fetchData = async () => {
+    try {
+        const userResponse = await fetch(`/api/users/${loggedUser.username}`);
+        const userData = await userResponse.json();
+        setLoggedUser(userData);
+        
+        const adsResponse = await fetch('/api/ads');
+        const data = await adsResponse.json();
+
+        let unApprovedAds = data.filter(ad => !ad.approved);
+        let approvedAds = data.filter(ad => ad.approved);
+        setUnApprovedAds(unApprovedAds);
+        setApprovedAds(approvedAds);
+    } catch (error) {
+        console.log("Error fetching data:", error);
+    }
+};
 
     return (
         <>{loggedUser.username == "Admin" ? (
