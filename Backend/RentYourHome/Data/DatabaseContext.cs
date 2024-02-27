@@ -16,15 +16,10 @@ public class DatabaseContext : DbContext
     public DbSet<UserAdApplication> UserAdApplications { get; set; }
     public DbSet<Image> Images { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
-        var root = Directory.GetCurrentDirectory();
-        var dotenv = Path.Combine(root, "..", "..", ".env");
-        Env.Load(dotenv);
-        optionsBuilder.UseSqlServer(
-            $"Server={Environment.GetEnvironmentVariable("DBHOST")},{Environment.GetEnvironmentVariable("DBPORT")};Database={Environment.GetEnvironmentVariable("DBNAME")};User Id={Environment.GetEnvironmentVariable("DBUSER")};Password={Environment.GetEnvironmentVariable("DBPASSWORD")};Encrypt=false;");
     }
-
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Image>(entity =>
