@@ -1,0 +1,51 @@
+name: Integration tests
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+        DOTENV_PATH: ${{ github.workspace }}/.env
+        DBHOST: "localhost"
+        SERVERPORT: 5256
+        # DBNAME: "RentYourHome"
+        TESTDBNAME: "RentYourHomeTest"
+        DBPORT: 1433
+        DBUSER: "sa"
+        DBPASSWORD: "yourStrong(!)Password"
+        ISSUERSIGNINGKEY: "!SomethingSecret!!SomethingSecret!"
+        
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server
+        env:
+          DOTENV_PATH: ${{ github.workspace }}/.env
+          SA_PASSWORD: "yourStrong(!)Password"
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1  # Fetch only the latest commit to speed up the checkout process
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 7.0.x
+      
+      - name: Restore dependencies
+        run: dotnet restore ./Backend
+      
+      - name: Build
+        run: dotnet build ./Backend --no-restore
+        
+      - name: Test
+        run: dotnet test ./Backend --no-build --verbosity normal
