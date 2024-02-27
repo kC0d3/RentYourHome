@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RentYourHome.Data;
@@ -10,6 +11,7 @@ using RentYourHome.Services.Authentication;
 using RentYourHome.Services.ClassConverterService;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = ConnectionString.GetConnectionString();
 
 AddServices();
 ConfigureSwagger();
@@ -25,21 +27,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-AddRoles();
-AddAdmin();
-
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+await app.Services.InitializeTestDbAsync();
+AddRoles();
+AddAdmin();
+
 app.Run();
 
 void AddServices()
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSingleton<IUserRepository, UserRepository>();
-    builder.Services.AddSingleton<IAdRepository, AdRepository>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IAdRepository, AdRepository>();
     builder.Services.AddSingleton<IClassConverterService, ClassConverterService>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
@@ -80,7 +84,10 @@ void AddAuthentication()
 
 void AddDbContext()
 {
-    builder.Services.AddDbContext<UsersContext>();
+    builder.Services.AddDbContext<DatabaseContext>(optionsBuilder =>
+        optionsBuilder.UseSqlServer(connectionString));
+    builder.Services.AddDbContext<UsersContext>(optionsBuilder =>
+        optionsBuilder.UseSqlServer(connectionString));
 }
 
 void AddIdentity()
