@@ -8,23 +8,23 @@ namespace RentYourHome.Repositories.UserRepository;
 public class UserRepository : IUserRepository
 {
     private readonly IClassConverterService _classConverterService;
+    private readonly DatabaseContext _dbContext;
 
-    public UserRepository(IClassConverterService classConverterService)
+    public UserRepository(DatabaseContext dbContext, IClassConverterService classConverterService)
     {
         _classConverterService = classConverterService;
+        _dbContext = dbContext;
     }
 
     public void AddUserToDb(UserReqDto user)
     {
-        using var dbContext = new DatabaseContext();
-        dbContext.Add(_classConverterService.UserReqDtoToUser(user));
-        dbContext.SaveChanges();
+        _dbContext.Add(_classConverterService.UserReqDtoToUser(user));
+        _dbContext.SaveChanges();
     }
 
     public async Task<User?> GetUserByUserName(string username)
     {
-        await using var dbContext = new DatabaseContext();
-        return dbContext.Users
+        return _dbContext.Users
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Images)
             .Include(u => u.PublishedAds)
@@ -34,8 +34,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetUserById(int id)
     {
-        await using var dbContext = new DatabaseContext();
-        return dbContext.Users
+        return _dbContext.Users
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Images)
             .Include(u => u.PublishedAds)
@@ -45,15 +44,13 @@ public class UserRepository : IUserRepository
 
     public void UpdateUser(User user)
     {
-        using var dbContext = new DatabaseContext();
-        dbContext.Update(user);
-        dbContext.SaveChanges();
+        _dbContext.Update(user);
+        _dbContext.SaveChanges();
     }
 
     public void DeleteUser(User user)
     {
-        using var dbContext = new DatabaseContext();
-        dbContext.Remove(user);
-        dbContext.SaveChanges();
+        _dbContext.Remove(user);
+        _dbContext.SaveChanges();
     }
 }
