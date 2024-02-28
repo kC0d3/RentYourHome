@@ -163,4 +163,66 @@ public class RentYourHomeIntegrationTests
         adResponse?.Id.Should().Be(1);
         adResponse?.Approved.Should().Be(true);
     }
+
+    [Fact]
+    public async Task GetAllAds()
+    {
+        //Arrange
+        var application = new RentYourHomeWebApplicationFactory();
+        var userReg = new RegistrationRequest("user1@user1.com", "user1", "firstname", "lastname", "123456");
+        var user = new AuthRequest("user1", "123456");
+        var ad = new AdReqDto
+        {
+            Address = new AddressDto
+            {
+                City = "City",
+                HouseNumber = "HouseNumber",
+                Street = "Street",
+                ZipCode = "ZipCode"
+            },
+            Description = "Description",
+            Images = new[] { "1.jpg" },
+            Price = 1,
+            Rooms = 1,
+            Size = 1,
+            UserId = 1
+        };
+        var ad2 = new AdReqDto
+        {
+            Address = new AddressDto
+            {
+                City = "City",
+                HouseNumber = "HouseNumber",
+                Street = "Street",
+                ZipCode = "ZipCode"
+            },
+            Description = "Description",
+            Images = new[] { "1.jpg" },
+            Price = 2,
+            Rooms = 2,
+            Size = 2,
+            UserId = 1
+        };
+        var client = application.CreateClient();
+        //User reg, login
+        await client.PostAsJsonAsync("/api/auth/register", userReg);
+        var userLogResp = await client.PostAsJsonAsync("/api/auth/login", user);
+        var userCookies = userLogResp.Headers.GetValues("Set-Cookie");
+        var userToken = userCookies
+            .SelectMany(cookie => cookie.Split(';'))
+            .FirstOrDefault(c => c.Contains("token="))?
+            .Split('=')[1];
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userToken);
+        await client.PostAsJsonAsync("/api/ads", ad);
+        await client.PostAsJsonAsync("/api/ads", ad2);
+        
+        //Act
+        var response = await client.GetAsync("/api/ads");
+        
+        //Assert
+        response.EnsureSuccessStatusCode();
+        var ads = await response.Content.ReadFromJsonAsync<List<AdDto>>();
+        ads?.Count.Should().Be(2);
+
+    }
 }
