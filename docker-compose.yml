@@ -2,7 +2,7 @@ version: '3'
 
 services:
   rent_backend:
-    image: rent_backend
+    image: kc0d3/rentyourhome:rent_backend
     build:
       context: ./Backend/RentYourHome
     container_name: rent-backend
@@ -16,7 +16,7 @@ services:
 
   rent-frontend:
     container_name: rent-frontend
-    image: rent_frontend
+    image: kc0d3/rentyourhome:rent_frontend
     build:
       context: ./Frontend
       dockerfile: Dockerfile

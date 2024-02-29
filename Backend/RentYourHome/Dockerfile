@@ -1,20 +1,18 @@
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+# Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
-EXPOSE 9090
-ENV ASPNETCORE_URLS=http://+:9090/
+ENV ASPNETCORE_URLS=http://+:9090
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
-COPY ["RentYourHome.csproj", "."]
-RUN dotnet restore "RentYourHome.csproj"
-COPY . .
-WORKDIR "/src/."
-RUN dotnet build "RentYourHome.csproj" -c Release -o /app/build
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM build AS publish
-RUN dotnet publish "RentYourHome.csproj" -c Release -o /app/publish /p:UseAppHost=false
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-FROM base AS final
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "RentYourHome.dll"]
