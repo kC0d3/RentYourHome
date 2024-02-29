@@ -12,7 +12,7 @@ using RentYourHome.Services.Authentication;
 using RentYourHome.Services.ClassConverterService;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = ConnectionString.GetConnectionString();
+var connectionString = ConnectionString.GetLiveConnectionString();
 
 AddServices();
 ConfigureSwagger();
@@ -36,7 +36,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-await app.Services.InitializeTestDbAsync();
+await app.Services.InitializeDbAsync();
 AddRoles();
 AddAdmin();
 
