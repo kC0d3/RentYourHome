@@ -144,9 +144,7 @@ void ConfigureSwagger()
 
 void AddRoles()
 {
-    using var
-        scope = app.Services
-            .CreateScope(); // RoleManager is a scoped service, therefore we need a scope instance to access it
+    using var scope = app.Services.CreateScope();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     var tAdmin = CreateAdminRole(roleManager);
@@ -158,14 +156,12 @@ void AddRoles()
 
 async Task CreateAdminRole(RoleManager<IdentityRole> roleManager)
 {
-    await roleManager.CreateAsync(
-        new IdentityRole("Admin")); //The role string should better be stored as a constant or a value in appsettings
+    await roleManager.CreateAsync(new IdentityRole("Admin"));
 }
 
 async Task CreateUserRole(RoleManager<IdentityRole> roleManager)
 {
-    await roleManager.CreateAsync(
-        new IdentityRole("User")); //The role string should better be stored as a constant or a value in appsettings
+    await roleManager.CreateAsync(new IdentityRole("User"));
 }
 
 void AddAdmin()

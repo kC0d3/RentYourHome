@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RentYourHome.Data;
 
@@ -10,14 +12,24 @@ public static class DataExtensions
         var databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
         var usersContext = scope.ServiceProvider.GetRequiredService<UsersContext>();
 
-        if (!databaseContext.Database.CanConnect())
+        if (!await databaseContext.Database.CanConnectAsync() || !await AllMigrationsApplied(databaseContext))
         {
             await databaseContext.Database.MigrateAsync();
         }
 
-        if (!usersContext.Database.CanConnect())
+        if (!await usersContext.Database.CanConnectAsync() || !await AllMigrationsApplied(usersContext))
         {
             await usersContext.Database.MigrateAsync();
         }
+    }
+
+    private static async Task<bool> AllMigrationsApplied(DbContext context)
+    {
+        var applied = await context.GetService<IHistoryRepository>()
+            .GetAppliedMigrationsAsync();
+
+        var total = context.GetService<IMigrationsAssembly>().Migrations.Select(m => m.Key);
+
+        return !total.Except(applied.Select(m => m.MigrationId)).Any();
     }
 }
