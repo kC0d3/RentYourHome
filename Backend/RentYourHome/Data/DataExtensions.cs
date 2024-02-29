@@ -4,12 +4,20 @@ namespace RentYourHome.Data;
 
 public static class DataExtensions
 {
-    public static async Task InitializeTestDbAsync(this IServiceProvider serviceProvider)
+    public static async Task InitializeDbAsync(this IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
         var databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
         var usersContext = scope.ServiceProvider.GetRequiredService<UsersContext>();
-        await databaseContext.Database.MigrateAsync();
-        await usersContext.Database.MigrateAsync();
+
+        if (!databaseContext.Database.CanConnect())
+        {
+            await databaseContext.Database.MigrateAsync();
+        }
+
+        if (!usersContext.Database.CanConnect())
+        {
+            await usersContext.Database.MigrateAsync();
+        }
     }
 }
