@@ -9,14 +9,15 @@ import CreateAd from './Components/CreateAd.jsx';
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(undefined);
+  const [role, setRole] = useState(undefined);
 
   return (
     <Router>
       <Navbar {...{ loggedUser, setLoggedUser }} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage {...{ loggedUser, setLoggedUser }} />} />
-        <Route path="/profile" element={<ProfilePage {...{ loggedUser, setLoggedUser }} />} />
+        <Route path="/login" element={<LoginPage {...{ loggedUser, setLoggedUser, setRole }} />} />
+        <Route path="/profile" element={<ProfilePage {...{ loggedUser, setLoggedUser, role }} />} />
         <Route path="/ads/:id" element={<AdDetails {...{ setLoggedUser }} />} />
         <Route path="/ads/create" element={<CreateAd {...{ loggedUser, setLoggedUser }} />} />
         {/* <Route path="*" element={<ErrorPage />} /> */}
