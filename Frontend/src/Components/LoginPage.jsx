@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import RegistrationForm from "./RegistrationForm";
 
-function LoginPage({ loggedUser, setLoggedUser }) {
+function LoginPage({ loggedUser, setLoggedUser, setRole }) {
     const navigate = useNavigate();
     const [showRegistration, setShowRegistration] = useState(false);
     const [username, setUsername] = useState("");
@@ -25,12 +25,10 @@ function LoginPage({ loggedUser, setLoggedUser }) {
                 }),
             });
             
-            console.log(username);
-            console.log(password);
-            let a = await response.text();
-            console.log(a)
+            let role = await response.text();
+            setRole(role);           
 
-            if (response.ok && a !== "Admin") {
+            if (response.ok && role !== "Admin") {
                 const response = await fetch(`/api/users/${username}`);
                 const userData = await response.json();
                 await setLoggedUser(userData);
@@ -38,7 +36,7 @@ function LoginPage({ loggedUser, setLoggedUser }) {
                 setTimeout(() => {
                 navigate('/');
                 }, 3000);
-            } else if(response.ok && a == "Admin"){
+            } else if(response.ok && role == "Admin"){
                 const admin = {username: "Admin",
                                 firstName: "Admin",
                                 lastName: "Admin",
