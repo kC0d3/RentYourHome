@@ -2,6 +2,7 @@ using RentYourHome.Contracts;
 using RentYourHome.Models.Addresses;
 using RentYourHome.Models.Ads;
 using RentYourHome.Models.Images;
+using RentYourHome.Models.UserAdApplications;
 using RentYourHome.Models.Users;
 
 namespace RentYourHome.Services.ClassConverterService;
@@ -19,7 +20,7 @@ public class ClassConverterService : IClassConverterService
             Email = user.Email,
         };
     }
-    
+
     public UserReqDto RegistrationRequestToToUser(RegistrationRequest user)
     {
         return new UserReqDto
@@ -41,6 +42,7 @@ public class ClassConverterService : IClassConverterService
             Price = ad.Price,
             Description = ad.Description,
             Images = StringsToImages(ad.Images),
+            UserAdApplications = new List<UserAdApplication>(),
             UserId = ad.UserId,
         };
     }
@@ -73,6 +75,8 @@ public class ClassConverterService : IClassConverterService
             Description = ad.Description,
             Approved = ad.Approved,
             Images = ImagesToStrings(ad.Images),
+            UserAdApplications = ad.UserAdApplications
+                .Select(ua => new UserAdApplicationDto { UserId = ua.UserId, AdId = ua.AdId }).ToList(),
         };
     }
 
@@ -87,6 +91,8 @@ public class ClassConverterService : IClassConverterService
             Email = user.Email,
             Accepted = user.Accepted,
             PublishedAds = AdsToAdDtos(user.PublishedAds),
+            UserAdApplications = user.UserAdApplications
+                .Select(ua => new UserAdApplicationDto { UserId = ua.UserId, AdId = ua.AdId }).ToList(),
         };
     }
 
@@ -101,6 +107,7 @@ public class ClassConverterService : IClassConverterService
             HouseNumber = addressDto.HouseNumber,
         };
     }
+
     private static ICollection<string> ImagesToStrings(IEnumerable<Image> images)
     {
         return images.Select(image => new string(image.ImageName)).ToList();
@@ -124,5 +131,4 @@ public class ClassConverterService : IClassConverterService
             HouseNumber = address.HouseNumber,
         };
     }
-    
 }
