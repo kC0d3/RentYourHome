@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RentYourHome.Data;
 using RentYourHome.Repositories.AdRepository;
+using RentYourHome.Repositories.UserAdApplicationRepository;
 using RentYourHome.Repositories.UserRepository;
 using RentYourHome.Services.Authentication;
 using RentYourHome.Services.ClassConverterService;
@@ -48,6 +49,7 @@ void AddServices()
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IAdRepository, AdRepository>();
+    builder.Services.AddScoped<UserAdApplicationRepository>();
     builder.Services.AddSingleton<IClassConverterService, ClassConverterService>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
