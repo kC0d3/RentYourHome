@@ -1,13 +1,64 @@
-function ProfileAds({ads, isAdmin, setApprovedAds, setUnApprovedAds, setLoggedUser, username}){
+import React, { useEffect } from "react";
 
-    const handleApprove = (id)=>
-    {
-        fetch(`/api/ads/approve/${id}`,{
+function ProfileAds({ appliedads, ads, isAdmin, setApprovedAds, setUnApprovedAds, setLoggedUser, loggedUser, username, setApplied, applied }) {
+
+    const fetchDataAndApplied = async () => {
+        await fetchData();
+        await fetchApplied();
+    };
+
+    useEffect(() => {
+        fetchDataAndApplied();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const res = await fetch(`/api/users/${loggedUser.username}`);
+            const data = await res.json();
+            setLoggedUser(data);
+        } catch (error) {
+            console.log("Error fetching data:", error);
+        }
+    };
+
+    const handleCancelApply = async adId => {
+        try {
+            const res = await fetch(`/api/useradapplication/cancel/${adId}&${loggedUser.id}`, {
+                method: 'DELETE'
+            });
+            if (res.ok) {
+                await fetchDataAndApplied();
+            }
+            else {
+                console.error(`Error cancel apply.`);
+            }
+        } catch (error) {
+            console.log("Error cancel apply:", error);
+        }
+    }
+
+    const fetchApplied = async () => {
+        try {
+            const appliedData = [];
+            for (const userad of loggedUser.userAdApplications) {
+                const response = await fetch(`/api/ads/${userad.adId}`);
+                const data = await response.json();
+                appliedData.push(data);
+            }
+            console.log(appliedData);
+            setApplied(appliedData);
+        } catch (error) {
+            console.error("Error fetching applied ads:", error);
+        }
+    }
+
+    const handleApprove = (id) => {
+        fetch(`/api/ads/approve/${id}`, {
             method: 'PUT'
         })
             .then(response => {
-                if (response.ok) {                    
-                    console.log(`Ad with ID ${id} has been approved.`);                    
+                if (response.ok) {
+                    console.log(`Ad with ID ${id} has been approved.`);
                     fetch('/api/ads')
                         .then(response => response.json())
                         .then(data => {
@@ -23,8 +74,8 @@ function ProfileAds({ads, isAdmin, setApprovedAds, setUnApprovedAds, setLoggedUs
             })
             .catch(error => {
                 console.error(`Error approving ad with ID ${id}:`, error);
-            });            
-    
+            });
+
     }
 
     const handleDelete = async (id) => {
@@ -32,7 +83,7 @@ function ProfileAds({ads, isAdmin, setApprovedAds, setUnApprovedAds, setLoggedUs
             const response = await fetch(`/api/ads/${id}`, {
                 method: 'DELETE'
             });
-    
+
             if (response.ok) {
                 console.log(`Ad with ID ${id} has been deleted.`);
                 if (isAdmin) {
@@ -53,62 +104,62 @@ function ProfileAds({ads, isAdmin, setApprovedAds, setUnApprovedAds, setLoggedUs
         } catch (error) {
             console.error(`Error delete ad with ID ${id}:`, error);
         }
-    };    
+    };
 
     return (
         <>
-        {isAdmin ? (
-            <div className="published-ads">
-                {ads.length > 0 ? (
-                    ads.map((ad, index) => (
-                        <div key={index} className="card">
-                            <div className="image-container">
-                                {ad.images[0] && (
-                                    <img src={`/api/images/${ad.images[0]}`} alt="Ad" />
+            {isAdmin ? (
+                <div className="published-ads">
+                    {ads.length > 0 ? (
+                        ads.map((ad, index) => (
+                            <div key={index} className="card">
+                                <div className="image-container">
+                                    {ad.images[0] && (
+                                        <img src={`/api/images/${ad.images[0]}`} alt="Ad" />
+                                    )}
+                                </div>
+                                <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
+                                <div>Rooms: {ad.rooms}</div>
+                                <div>Size: {ad.size} sqm</div>
+                                <div>Price: {ad.price} HUF</div>
+                                <div>Description: {ad.description}</div>
+                                {ad.approved === false && (
+                                    <button onClick={() => handleApprove(ad.id)}>Approve</button>
                                 )}
+                                <br></br>
+                                <button onClick={() => handleDelete(ad.id)}>Delete</button>
+                                <br></br>
                             </div>
-                            <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
-                            <div>Rooms: {ad.rooms}</div>
-                            <div>Size: {ad.size} sqm</div>
-                            <div>Price: {ad.price} HUF</div>
-                            <div>Description: {ad.description}</div>
-                            {ad.approved === false && (
-                            <button onClick={() => handleApprove(ad.id)}>Approve</button>
-                            )}
-                            <br></br>
-                            <button onClick={() => handleDelete(ad.id)}>Delete</button>
-                            <br></br>
-                        </div>
-                    ))
-                ) : (
-                    <p>No ads to display.</p>
-                )}
-            </div>
-        ) : (
-            <div className="published-ads">
-                {ads.length > 0 ? (
-                    ads.map((ad, index) => (
-                        <div key={index} className="card">
-                            <div className="image-container">
-                                {ad.images[0] && (
-                                    <img src={`/api/images/${ad.images[0]}`} alt="Ad" />
-                                )}
+                        ))
+                    ) : (
+                        <p>No ads to display.</p>
+                    )}
+                </div>
+            ) : (
+                <div className="published-ads">
+                    {ads.length > 0 ? (
+                        ads.map((ad, index) => (
+                            <div key={index} className="card">
+                                <div className="image-container">
+                                    {ad.images[0] && (
+                                        <img src={`/api/images/${ad.images[0]}`} alt="Ad" />
+                                    )}
+                                </div>
+                                <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
+                                <div>Rooms: {ad.rooms}</div>
+                                <div>Size: {ad.size} sqm</div>
+                                <div>Price: {ad.price} HUF</div>
+                                <div>Description: {ad.description}</div>
+                                {appliedads ? <button onClick={() => handleCancelApply(ad.id)}>Cancel</button> : <button onClick={() => handleDelete(ad.id)}>Delete</button>}
+                                <br></br>
                             </div>
-                            <div>Location: {`${ad.address.zipCode}, ${ad.address.city}, ${ad.address.street} ${ad.address.houseNumber}`}</div>
-                            <div>Rooms: {ad.rooms}</div>
-                            <div>Size: {ad.size} sqm</div>
-                            <div>Price: {ad.price} HUF</div>
-                            <div>Description: {ad.description}</div>
-                            <button onClick={() => handleDelete(ad.id)}>Delete</button>
-                            <br></br>
-                        </div>
-                    ))
-                ) : (
-                    <p>No ads to display.</p>
-                )}
-            </div>
-        )}
-    </>
+                        ))
+                    ) : (
+                        <p>No ads to display.</p>
+                    )}
+                </div>
+            )}
+        </>
     )
 }
 
