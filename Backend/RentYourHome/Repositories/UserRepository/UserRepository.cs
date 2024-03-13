@@ -25,10 +25,13 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetUserByUserName(string username)
     {
         return _dbContext.Users
+            .Include(u => u.UserAdApplications)
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Images)
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Address)
+            .Include(u => u.PublishedAds)
+            .ThenInclude(a => a.UserAdApplications)
             .FirstOrDefault(u => u.Username == username);
     }
 
