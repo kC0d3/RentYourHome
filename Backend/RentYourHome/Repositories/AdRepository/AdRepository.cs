@@ -31,7 +31,9 @@ public class AdRepository : IAdRepository
 
     public async Task<Ad?> GetAdById(int id)
     {
-        return _dbContext.Ads.Include(a => a.Address)
+        return _dbContext.Ads
+            .Include(a => a.Address)
+            .Include(a => a.UserAdApplications)
             .Include(a => a.Images)
             .FirstOrDefault(a => a.Id == id);
     }
