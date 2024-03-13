@@ -1,4 +1,5 @@
 using RentYourHome.Models.Ads;
+using RentYourHome.Models.UserAdApplications;
 
 namespace RentYourHome.Models.Users;
 
@@ -11,5 +12,5 @@ public class UserDto
     public string Email { get; init; }
     public bool Accepted { get; set; }
     public ICollection<AdDto> PublishedAds { get; init; }
-    
+    public ICollection<UserAdApplicationDto> UserAdApplications { get; init; }
 }
