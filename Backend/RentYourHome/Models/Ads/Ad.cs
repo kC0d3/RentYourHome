@@ -19,5 +19,5 @@ public class Ad
 
     public User User { get; init; }
     public int UserId { get; init; }
-    public ICollection<UserAdApplication> UserAdApplications { get; init; }
+    public ICollection<UserAdApplication> UserAdApplications { get; set; }
 }
