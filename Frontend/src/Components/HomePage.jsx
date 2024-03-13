@@ -23,7 +23,7 @@ function HomePage() {
             .then(response => response.json())
             .then(data => {
                 setAllAdsData(data);
-                let approvedAds = data.filter(ad=> ad.approved == true)
+                let approvedAds = data.filter(ad => ad.approved == true)
                 console.log(approvedAds);
                 setDisplayedAds(approvedAds);
                 setApprovedAds(approvedAds)
