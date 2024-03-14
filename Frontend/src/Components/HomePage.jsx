@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar.jsx";
 import FiltersBar from "./FiltersBar.jsx";
 
 function HomePage() {
@@ -24,10 +23,8 @@ function HomePage() {
             .then(data => {
                 setAllAdsData(data);
                 let approvedAds = data.filter(ad => ad.approved == true)
-                console.log(approvedAds);
                 setDisplayedAds(approvedAds);
                 setApprovedAds(approvedAds)
-                console.log(data);
             })
             .catch(error => console.log("Error fetching ads:", error));
     }, []);
