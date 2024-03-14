@@ -12,10 +12,10 @@ public class UserAdApplicationController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
     private readonly IAdRepository _adRepository;
-    private readonly UserAdApplicationRepository _userAdApplicationRepository;
+    private readonly IUserAdApplicationRepository _userAdApplicationRepository;
 
     public UserAdApplicationController(ILogger<UserController> logger, IAdRepository adRepository,
-        UserAdApplicationRepository userAdApplicationRepository)
+        IUserAdApplicationRepository userAdApplicationRepository)
     {
         _logger = logger;
         _adRepository = adRepository;
