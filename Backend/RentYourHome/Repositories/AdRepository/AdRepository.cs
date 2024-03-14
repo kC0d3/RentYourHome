@@ -22,20 +22,20 @@ public class AdRepository : IAdRepository
         _dbContext.SaveChanges();
     }
 
-    public async Task<IEnumerable<AdDto>> GetAllAds()
+    public async Task<IEnumerable<Ad>> GetAllAds()
     {
-        return _classConverterService.AdsToAdDtos(_dbContext.Ads
+        return await _dbContext.Ads
             .Include(a => a.Images)
-            .Include(a => a.Address).ToList());
+            .Include(a => a.Address).ToListAsync();
     }
 
     public async Task<Ad?> GetAdById(int id)
     {
-        return _dbContext.Ads
+        return await _dbContext.Ads
             .Include(a => a.Address)
             .Include(a => a.UserAdApplications)
             .Include(a => a.Images)
-            .FirstOrDefault(a => a.Id == id);
+            .FirstOrDefaultAsync(a => a.Id == id);
     }
 
     public void UpdateAd(Ad ad)
