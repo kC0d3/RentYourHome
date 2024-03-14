@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateAd({ loggedUser, setLoggedUser }) {
+export default function CreateAd({ loggedUser }) {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [ad, setAd] = useState({
