@@ -49,7 +49,7 @@ void AddServices()
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IAdRepository, AdRepository>();
-    builder.Services.AddScoped<UserAdApplicationRepository>();
+    builder.Services.AddScoped<IUserAdApplicationRepository, UserAdApplicationRepository>();
     builder.Services.AddSingleton<IClassConverterService, ClassConverterService>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
