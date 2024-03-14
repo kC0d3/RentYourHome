@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from "./Components/HomePage.jsx";
 import LoginPage from './Components/LoginPage.jsx';
@@ -6,6 +6,7 @@ import AdDetails from './Components/AdDetails.jsx';
 import Navbar from './Components/Navbar.jsx';
 import ProfilePage from './Components/ProfilePage.jsx';
 import CreateAd from './Components/CreateAd.jsx';
+import ErrorPage from './Components/ErrorPage.jsx';
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(undefined);
@@ -19,8 +20,8 @@ function App() {
         <Route path="/login" element={<LoginPage {...{ loggedUser, setLoggedUser, setRole }} />} />
         <Route path="/profile" element={<ProfilePage {...{ loggedUser, setLoggedUser, role }} />} />
         <Route path="/ads/:id" element={<AdDetails {... { loggedUser, setLoggedUser, role }} />} />
-        <Route path="/ads/create" element={<CreateAd {...{ loggedUser, setLoggedUser }} />} />
-        {/* <Route path="*" element={<ErrorPage />} /> */}
+        <Route path="/ads/create" element={<CreateAd {...{ loggedUser }} />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
   );
