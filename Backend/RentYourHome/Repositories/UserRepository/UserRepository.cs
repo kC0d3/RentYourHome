@@ -24,7 +24,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetUserByUserName(string username)
     {
-        return _dbContext.Users
+        return await _dbContext.Users
             .Include(u => u.UserAdApplications)
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Images)
@@ -32,17 +32,17 @@ public class UserRepository : IUserRepository
             .ThenInclude(a => a.Address)
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.UserAdApplications)
-            .FirstOrDefault(u => u.Username == username);
+            .FirstOrDefaultAsync(u => u.Username == username);
     }
 
     public async Task<User?> GetUserById(int id)
     {
-        return _dbContext.Users
+        return await _dbContext.Users
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Images)
             .Include(u => u.PublishedAds)
             .ThenInclude(a => a.Address)
-            .FirstOrDefault(u => u.Id == id);
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public void UpdateUser(User user)
