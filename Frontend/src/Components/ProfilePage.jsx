@@ -4,19 +4,14 @@ import ProfileAds from "./ProfilAds";
 import { useState, useEffect } from "react";
 
 function ProfilePage({ loggedUser, setLoggedUser, role }) {
-    console.log(loggedUser)
 
     const [unApprovedAds, setUnApprovedAds] = useState([]);
     const [approvedAds, setApprovedAds] = useState([]);
     const [applied, setApplied] = useState([])
 
     useEffect(() => {
-        const fetchDataAndApplied = async () => {
-            await fetchData();
-            await fetchApplied();
-        };
-
-        fetchDataAndApplied();
+        fetchData();
+        fetchApplied();
     }, []);
 
     const fetchApplied = async () => {
@@ -27,13 +22,11 @@ function ProfilePage({ loggedUser, setLoggedUser, role }) {
                 const data = await response.json();
                 appliedData.push(data);
             }
-            console.log(appliedData);
             setApplied(appliedData);
-            console.log(applied);
         } catch (error) {
             console.error("Error fetching applied ads:", error);
         }
-    }
+    };
 
     const fetchData = async () => {
         if (role !== "Admin") {
@@ -81,16 +74,15 @@ function ProfilePage({ loggedUser, setLoggedUser, role }) {
                 <div className="profil-page-container">
                     <div className="published-ads-container">
                         <h2 className="published-ads-title">Published Ads</h2>
-                        <ProfileAds className="published-ads" ads={loggedUser.publishedAds} setApprovedAds={setApprovedAds} setUnApprovedAds={setUnApprovedAds} username={loggedUser.username} setLoggedUser={setLoggedUser} />
+                        <ProfileAds className="published-ads" ads={loggedUser.publishedAds} setApprovedAds={setApprovedAds} setUnApprovedAds={setUnApprovedAds} username={loggedUser.username} setLoggedUser={setLoggedUser} fetchApplied={fetchApplied} />
                     </div>
                     <div className="applied-ads-container">
                         <h2 className="applied-ads-title">Applied Ads</h2>
-                        <ProfileAds className="published-ads" appliedads={true} ads={applied} setApprovedAds={setApprovedAds} setUnApprovedAds={setUnApprovedAds} username={loggedUser.username} loggedUser={loggedUser} setLoggedUser={setLoggedUser} setApplied={setApplied} applied={applied} />
+                        <ProfileAds className="published-ads" appliedads={true} ads={applied} setApprovedAds={setApprovedAds} setUnApprovedAds={setUnApprovedAds} username={loggedUser.username} loggedUser={loggedUser} setLoggedUser={setLoggedUser} fetchApplied={fetchApplied} />
                     </div>
                 </div>
             </>)
         }
-
         </>
     )
 }
