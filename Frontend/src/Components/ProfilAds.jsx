@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 
-function ProfileAds({ appliedads, ads, isAdmin, setApprovedAds, setUnApprovedAds, setLoggedUser, loggedUser, username, setApplied, applied }) {
-
-    const fetchDataAndApplied = async () => {
-        await fetchData();
-        await fetchApplied();
-    };
+function ProfileAds({ appliedads, ads, isAdmin, setApprovedAds, setUnApprovedAds, setLoggedUser, loggedUser, username, fetchApplied }) {
 
     useEffect(() => {
-        fetchDataAndApplied();
-    }, []);
+        fetchApplied();
+    }, [loggedUser]);
 
-    const fetchData = async () => {
+    const fetchUser = async () => {
         try {
             const res = await fetch(`/api/users/${loggedUser.username}`);
             const data = await res.json();
@@ -27,28 +22,13 @@ function ProfileAds({ appliedads, ads, isAdmin, setApprovedAds, setUnApprovedAds
                 method: 'DELETE'
             });
             if (res.ok) {
-                await fetchDataAndApplied();
+                await fetchUser();
             }
             else {
                 console.error(`Error cancel apply.`);
             }
         } catch (error) {
             console.log("Error cancel apply:", error);
-        }
-    }
-
-    const fetchApplied = async () => {
-        try {
-            const appliedData = [];
-            for (const userad of loggedUser.userAdApplications) {
-                const response = await fetch(`/api/ads/${userad.adId}`);
-                const data = await response.json();
-                appliedData.push(data);
-            }
-            console.log(appliedData);
-            setApplied(appliedData);
-        } catch (error) {
-            console.error("Error fetching applied ads:", error);
         }
     }
 
