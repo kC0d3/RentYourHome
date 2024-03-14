@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar.jsx";
 import RegistrationForm from "./RegistrationForm";
 
 function LoginPage({ loggedUser, setLoggedUser, setRole }) {
@@ -24,9 +23,9 @@ function LoginPage({ loggedUser, setLoggedUser, setRole }) {
                     password: password,
                 }),
             });
-            
+
             let role = await response.text();
-            setRole(role);           
+            setRole(role);
 
             if (response.ok && role !== "Admin") {
                 const response = await fetch(`/api/users/${username}`);
@@ -34,18 +33,20 @@ function LoginPage({ loggedUser, setLoggedUser, setRole }) {
                 await setLoggedUser(userData);
                 console.log('User successfully logged in.');
                 setTimeout(() => {
-                navigate('/');
+                    navigate('/');
                 }, 3000);
-            } else if(response.ok && role == "Admin"){
-                const admin = {username: "Admin",
-                                firstName: "Admin",
-                                lastName: "Admin",
-                                email: "..."}    
+            } else if (response.ok && role == "Admin") {
+                const admin = {
+                    username: "Admin",
+                    firstName: "Admin",
+                    lastName: "Admin",
+                    email: "..."
+                }
                 await setLoggedUser(admin);
                 setTimeout(() => {
                     navigate('/');
-                }, 1000);            
-            }else{
+                }, 1000);
+            } else {
                 setLoginError('Invalid username or password. Please try agagin.');
                 console.error('Invalid username or password during login.');
             }
