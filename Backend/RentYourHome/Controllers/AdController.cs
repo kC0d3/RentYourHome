@@ -28,7 +28,7 @@ public class AdController : ControllerBase
     {
         try
         {
-            return Ok(await _adRepository.GetAllAds());
+            return Ok(_classConverterService.AdsToAdDtos(await _adRepository.GetAllAds()));
         }
         catch (Exception e)
         {
