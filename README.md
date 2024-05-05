@@ -47,6 +47,7 @@ Just those ads appear which accepted by one of the admins.
 ## Built With
 
 * [![.NET][.NET]][.NET-url]
+* ![MSSQL]
 * [![React][React.js]][React-url]
 * [![Vite][Vite]][Vite-url]
 * [![C#][C#]][C#-url]
@@ -68,6 +69,8 @@ Just those ads appear which accepted by one of the admins.
 [.NET]: https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white
 
 [.NET-url]: https://learn.microsoft.com/hu-hu/dotnet/core/introduction
+
+[MSSQL]: https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white
 
 [Vite]: https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white
 
