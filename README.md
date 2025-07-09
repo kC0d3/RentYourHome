@@ -35,12 +35,7 @@
 
 ## About The Project
 
-This project for make a web application which is for landlords and tenants able to register and make advertisement for
-renting houses.
-They are able to attach pictures and details about the residence.
-Registered users capable to apply for ads and also make one.
-Admins can approve the advertisements prevent false ads appear.
-Just those ads appear which accepted by one of the admins.
+This project is a web application designed for landlords and tenants to create and browse rental advertisements. Users can register, post property listings with images and detailed descriptions, and also apply for existing rental offers. To ensure quality and prevent false or misleading ads, all listings must be reviewed and approved by an admin before they become visible on the platform.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
